@@ -1,0 +1,15 @@
+@media screen and (max-width: 575px){
+	.col-xs-w-100{
+		width: 100% !important;
+	}
+	.col-xs-w-75{
+		width: 75% !important;
+	}
+
+	.col-xs-w-50{
+		width: 50% !important;
+	}
+	.col-xs-w-25{
+		width: 25% !important;
+	}
+}
