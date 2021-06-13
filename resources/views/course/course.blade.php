@@ -44,7 +44,7 @@
                     <div class="news_left">
                     <feature class="pb-3 d-block"><img class="w-100" src="{{asset($class_details->image)}}" alt=""></feature>
                     <h2>Leg Workout</h2>
-                    <ul class="post_detail">
+                    <ul class="post_detail item_details">
                         <li><span class="fa fa-calendar"></span> Class Time : 10.00 AM - 11.00 AM</li>
                         <li><span class="fa fa-user"></span> Jhon Doe</li>
                     </ul>

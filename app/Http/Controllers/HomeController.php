@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Building;
+use App\Models\ClassDay;
 use App\Models\CourseClass;
 use App\Models\Gallery;
 use App\Models\Home;
 use App\Models\News;
 use App\Models\OurAddress;
+use App\Models\Schedule;
 use App\Models\Trainer;
 use Illuminate\Http\Request;
 
@@ -27,6 +29,7 @@ class HomeController extends Controller
         $this->data['latestNews'] = News::orderBy('id', 'desc')->take(3)->get();
         $this->data['uniqueDatas'] = Home::uniqueArrForGallary();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        // $this->data['test'] = Schedule::arrForClassDay();
         return view('index',$this->data);
     }
 

@@ -38,7 +38,7 @@
                                 </div>
                                 <h4>{!! $news->title? $news->title:'' !!}</h4>
                                 @if($news->description)
-                                <p>{{ $news->description }} <a href="{{ url('news/details'.'/'. $news->id) }} ">Read More...</a></p>
+                                <p>{{ $news->description }} <a href="{{ route('news.details',[$news->id]) }} ">Read More...</a></p>
                                 @endif
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 </div>
                                 <h4>{!! $news->title? $news->title:'' !!}</h4>
                                 @if($news->description)
-                                <p>{{ $news->description }} <a href="{{ $news->id }} ">Read More...</a></p>
+                                <p>{{ $news->description }} <a href="{{ route( 'news.details', [$news->id] ) }}">Read More...</a></p>
                                 @endif
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                     {{-- Start Single News details or Single news Page --}}
                     <div class="feature p-b-25"><img class="w-100" src="{{asset($news_details->image)}}" class="img-responsive" alt=""></div>
                     <h2>{{$news_details->title}}</h2>
-                    <ul class="post-detail">
+                    <ul class="post_detail item_details">
                         <li><span class="fa fa-user"></span> Jhon Doe</li>
                         <li><span class="fa fa-calendar"></span> December 30, 2016</li>
                         <li><span class="fa fa-comments"></span> Comments : 01</li>
@@ -133,14 +133,10 @@
                                 @if (isset($categories))
                                 @foreach($categories as $category)
                                 @if($category->category)
-                                <li><a href="{{url('news'). "/" . $category->cat_id}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
+                                <li><a href="{{route('news.category', [$category->cat_id])}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
                                 @endif
                                 @endforeach
                                 @endif
-                                {{-- <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> Body Building </a></li>
-                                <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> Trainer </a></li>
-                                <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> Running </a></li>
-                                <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> Yoga </a></li> --}}
                             </ul>
                         </div>
                         <div class="archives">

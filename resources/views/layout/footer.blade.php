@@ -77,3 +77,27 @@
         </div>
     </div>
 </footer>
+<!-- Jquery -->
+<script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+
+<!-- Breadcrumbs JS -->
+<script src="{{asset('assets/js/breadcrumbs.min.js')}}"></script>
+@if (Request::is('/') || Request::is('schedule'))
+    <!-- isotope JS -->
+    <script src="{{asset('assets/js/isotope.pkgd.min.js')}}"></script>
+    <!-- lightbox JS -->
+<script src="{{asset('assets/js/lightbox.min.js')}}"></script>
+@endif
+
+
+<!-- Owl Carousle JS -->
+<script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
+<!-- Fontawesome JS -->
+<!-- <script src="{{asset('assets/js/all.min.js')}}"></script> -->
+<!-- Bootstrap JS -->
+<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/js/main.js')}}"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

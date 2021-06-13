@@ -63,25 +63,10 @@ jQuery(document).ready(function(){
     
   });
 //gallery isotope
-// init Isotope
-        // var $grid = $('.grid_list').isotope({
-        // layoutMode: 'fitRows',
-        // fitRows: {
-        //   gutter: 0
-        // }
-        // });
-        // // filter items on button click
-        // $('.tabs').on( 'click', 'li span', function() {
-        // var filterValue = $(this).attr('data-filter');
-        // $grid.isotope({ filter: filterValue });
-        // });
 
-
-
-
-    $('.gallery ul.tabs li:first').addClass('active');
-    $(".gallery ul.tabs li span").on('click',function(){
-        $('.gallery ul.tabs li').removeClass('active');
+    $('.my_isotope ul.tabs li:first').addClass('active');
+    $(".my_isotope ul.tabs li span").on('click',function(){
+        $('.my_isotope ul.tabs li').removeClass('active');
         $(this).parent().addClass('active');
     });
     var $grid = $('.grid_list').isotope({
@@ -113,7 +98,7 @@ jQuery(document).ready(function(){
     }
     };
     // bind filter button click
-    $('.gallery .tabs').on( 'click', 'span', function() {
+    $('.my_isotope .tabs').on( 'click', 'span', function() {
     var filterValue = $( this ).attr('data-filter');
     // use filterFn if matches value
     filterValue = filterFns[ filterValue ] || filterValue;
@@ -139,4 +124,12 @@ jQuery(document).ready(function(){
 $('#breadcrumbs').breadcrumbsGenerator();
 
 });// jquery end
+
+
+
+// function OnFunc(){
+// document.querySelector(".schedule_tabs").querySelector(".list").classList.add("active");
+// }
+
+document.querySelector("#pills-tab").querySelector(".nav-item").querySelector("button").classList.add("active");
 

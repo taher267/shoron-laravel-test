@@ -70,7 +70,7 @@ span{display: inline-block;}
     margin: 0 10px;
     border-bottom: 2px solid transparent;
 }
-.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link{
+.navbar-light .navbar-nav .nav-link.active, .navbar-nav .nav-link.active,.navbar-light .navbar-nav .show>.nav-link{
     color: #fb9221 !important;
     border-bottom: 2px solid #fb9221;
 }
@@ -764,17 +764,17 @@ ul.tags-list li a:hover {
     padding-bottom: 20px!important;
     clear: both
 }
-.post_detail {
+.post_detail, .item_details {
     float: left;
     width: 100%;
     margin: 20px 0
 }
-.post_detail li {
+.post_detail li, .item_details li {
     float: left;
     margin: 0 22px 0 0;
     font-size: 13px;
 }
-.post_detail li span {
+.post_detail li span, .item_details li span {
     color: #fb9221;
     margin-right: 5px;
     font-size: 14px;
@@ -1105,7 +1105,27 @@ ul.tags-list li a:hover {
 }
 
 /* Schedule Page */
-
+/*.schedule_tabs{
+    position: relative;
+}*/
 ul.tabs li.active span {
     background: #FB9221;
+}
+
+
+/*Admin Login page*/
+
+.login_wrapper {
+    display: block;
+    overflow: hidden;
+    margin: 120px 0 50px 0px;
+}
+
+.nav_bg_custom{background: #031133 !important;}
+
+.nav_bg_custom li.nav-item > a.nav-link{
+    color: #fff !important;
+}
+#header.nav_bg_custom li.nav-item > a.nav-link.active{
+    color: #fb9221 !important;
 }

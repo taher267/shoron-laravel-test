@@ -20,7 +20,7 @@ class CreateCourseClassesTable extends Migration
             $table->string('type', 100);
             $table->date('date');
             $table->time('time');
-            $table->foreignId('cat_id')->nullable();
+            $table->foreignId('class_time_id')->nullable();
             $table->foreignId('build_id')->nullable();
             $table->timestamps();
         });

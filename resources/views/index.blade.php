@@ -78,7 +78,7 @@
 
 @yield('expart_trainer')
 <!--  Gallery Start-->
-<div class="gallery ">
+<div class="gallery my_isotope">
     <div class="container">
         <div class="gallery_heading heading">
         <h3>Our Gallery </h3>
