@@ -24,7 +24,10 @@
 
         <!-- Custom css -->
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+        <!--Display None style-->
+        <link href="{{asset('assets/css/d-none-style.css')}}" rel="stylesheet">
         <!-- Responsive css -->
         <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
+        <script src="{{asset('assets/js/purejs.js')}}"></script>
         
     </head>

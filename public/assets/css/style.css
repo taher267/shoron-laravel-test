@@ -38,6 +38,12 @@ span{display: inline-block;}
     background: #fb9221;
     color: #fff;
 }
+.h-300{
+    height: 300px;
+}
+.h_100{
+    height: 100px;
+}
 /*
 ==================================
     Header CSS

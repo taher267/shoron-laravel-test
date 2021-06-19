@@ -12,7 +12,7 @@ class Category extends Model
     // {
     //     return $this->hasMany(ClassTime::class);
     // }
-    public static function arrForSchedule(){
+    public static function categoriesListArr(){
         $arr = [];
         $categories =  self::all();
         foreach ( $categories as $category ) {
@@ -21,4 +21,16 @@ class Category extends Model
 
         return $arr;
     }
+
+
+    // public static function catIdForCatNews()
+    // {
+    //     $categories = self::all();
+
+    //     echo gettype($categories);
+    //     exit();
+    //     array_map(function($cat){
+    //         return $cat;
+    //     }, $categories);
+    // }
 }

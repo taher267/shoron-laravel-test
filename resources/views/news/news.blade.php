@@ -19,7 +19,7 @@
 </div>
 <!-- End  Breadcrumbs Banner -->
 <!-- Start News sec -->
-<div class="news">
+<div class="news @isset($newses)all_newses @endisset">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-sm-12">
@@ -30,15 +30,18 @@
                         <div class="col-sm-6 col-xs-12">
                             <div class="news_box">
                                 <div class="featured">
-                                    <img src="{{asset($news->image)}}" alt="">
+                                    <img class="mw-100 h-300" src="{{asset('storage/assets/news/'. $news->image)}}" alt="">
                                     <div class="date">
-                                        <span>JAN</span>
-                                        <strong>20</strong>
+                                        @if ($news->date)
+                                          @foreach(explode('-', $news->date) as $date) 
+                                            <span class="date_per text-uppercase">{{$date}}</span>
+                                          @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <h4>{!! $news->title? $news->title:'' !!}</h4>
                                 @if($news->description)
-                                <p>{{ $news->description }} <a href="{{ route('news.details',[$news->id]) }} ">Read More...</a></p>
+                                <p>{{ $news->description }} <a href="{{ route('news.details',[$news->slug]) }} ">Read More...</a></p>
                                 @endif
                             </div>
                         </div>
@@ -52,7 +55,7 @@
                         <div class="col-sm-6 col-xs-12">
                             <div class="news_box">
                                 <div class="featured">
-                                    <img src="{{asset($news->image)}}" alt="">
+                                    <img src="{{asset('storage/assets/news/'. $news->image)}}" alt="">
                                     <div class="date">
                                         <span>JAN</span>
                                         <strong>20</strong>
@@ -61,6 +64,7 @@
                                 <h4>{!! $news->title? $news->title:'' !!}</h4>
                                 @if($news->description)
                                 <p>{{ $news->description }} <a href="{{ route( 'news.details', [$news->id] ) }}">Read More...</a></p>
+                                <p>{{ $news->description }} <a href="{{ route( 'news.details', [$news->slug] ) }}">Read More...</a></p>
                                 @endif
                             </div>
                         </div>
@@ -69,19 +73,19 @@
                     </div>
                     {{-- Category news end --}}
                     @if (isset($news_details))
+                    @foreach ($news_details as $news)
+
                     {{-- Start Single News details or Single news Page --}}
-                    <div class="feature p-b-25"><img class="w-100" src="{{asset($news_details->image)}}" class="img-responsive" alt=""></div>
-                    <h2>{{$news_details->title}}</h2>
+                    <div class="feature p-b-25"><img class="w-100" src="{{asset('storage/assets/news/'. $news->image)}}" class="img-responsive" alt=""></div>
+                    <h2>{{$news->title}}</h2>
+                    <h2>{{$news->id}}</h2>
                     <ul class="post_detail item_details">
                         <li><span class="fa fa-user"></span> Jhon Doe</li>
                         <li><span class="fa fa-calendar"></span> December 30, 2016</li>
                         <li><span class="fa fa-comments"></span> Comments : 01</li>
                     </ul>
-                    <p>{{$news_details->description}}</p>
-                    <p>{{$news_details->description}}</p>
-                    <p>{{$news_details->description}}</p>
-                    <p>{{$news_details->description}}</p>
-                    <p>{{$news_details->description}}</p>
+                    <p>{{$news->description}}</p>
+
                     <div class="comments-wrapper">
                         <h3>2 Comments</h3>
                         <ul class="row comments">
@@ -118,6 +122,9 @@
                             </form>
                         </div>
                         {{-- End Single News details or Single news Page --}}
+
+                        
+                    @endforeach
                         @endif
                     </div>
                 </div>
@@ -133,7 +140,7 @@
                                 @if (isset($categories))
                                 @foreach($categories as $category)
                                 @if($category->category)
-                                <li><a href="{{route('news.category', [$category->cat_id])}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
+                                <li><a href="{{route('news.category', [$category->slug])}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
                                 @endif
                                 @endforeach
                                 @endif

@@ -15,10 +15,12 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 120)->nullable();
-            $table->text('description')->nullable();
-            $table->foreignId('cat_id');
-            $table->date('date');
+            $table->string('title', 120);
+            $table->string('slug');
+            $table->longText('description')->nullable();
+            $table->string('image')->default('default.png');
+            $table->foreignId('cat_id')->default(0);
+            $table->string('date');
             $table->timestamps();
         });
     }

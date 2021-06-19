@@ -29,7 +29,6 @@ class LoginController extends Controller
     public function authenticate(LoginRequest $request)
     {
         $formData = $request->only('email', 'password');
-        // $formData['password']= Hash::make($formData['password']);
         if (Auth::attempt($formData)) {
             return redirect()->intended('dashboard');
         }else{

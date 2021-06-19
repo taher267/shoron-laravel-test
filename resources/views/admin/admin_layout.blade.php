@@ -59,16 +59,33 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+
+            {{-- Schedule Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSchedule"
+                    aria-expanded="true" aria-controls="collapseSchedule">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Schedule</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseSchedule" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('day.index')}}">Day</a>
                         <a class="collapse-item" href="{{route('time.index')}}">Class Time</a>
+                    </div>
+                </div>
+            </li>
+            
+            {{-- News Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fa fa-newspaper"></i>
+                    <span>News</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('news.list')}}">News List</a>
+                        <a class="collapse-item" href="{{route('news.create')}}">Add News</a>
                     </div>
                 </div>
             </li>

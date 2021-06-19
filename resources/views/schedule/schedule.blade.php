@@ -44,6 +44,7 @@
             @foreach ( $schedule as $data )
 
             @if ( $data->day->id ==1 )
+            
                 <div class="tab-pane fade show active" id="pills-{{$data->day->day}}" role="tabpanel" aria-labelledby="pills-{{$data->day->day}}-tab">
                 <table class="table table-striped">
                     <tbody>
