@@ -12,7 +12,7 @@ class News extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'description', 'slug', 'cat_id', 'image','date'];
-    // protected $primaryKey = 'slug';
+    
 
     public function Category()
     {

@@ -38,6 +38,9 @@ span{display: inline-block;}
     background: #fb9221;
     color: #fff;
 }
+.menu_active{
+    color: #fff !important;
+}
 .h-300{
     height: 300px;
 }

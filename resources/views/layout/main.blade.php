@@ -19,7 +19,7 @@
                                         <a class="nav-link {{ request()->is('/') ? 'active' : ''}}" aria-current="page" href="{{route('home')}}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('about*') ? 'active' : ''}}" href="about">About Us</a>
+                                        <a class="nav-link {{ request()->is('about*') ? 'active' : ''}}" href="{{route('about')}}">About Us</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->is('classes*') ? 'active' : ''}}" href="{{route('classes')}}">Classes</a>

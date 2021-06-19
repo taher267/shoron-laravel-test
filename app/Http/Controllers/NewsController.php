@@ -230,11 +230,23 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $news =  News::where('slug', $slug)->get();
+
+        //check the post image exists
+        if (Storage::disk('public')->exists('assets/news/' . $news[0]->image)) {
+            Storage::disk('public')->delete('assets/news/' . $news[0]->image);
+        }
+        
+        if (News::where('slug', $slug)->delete()) {
+            Session()->flash('msg', 'News Has been deleted!!');
+            return redirect()->back();
+        }
+
+
     }
 }

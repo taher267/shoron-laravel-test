@@ -62,7 +62,7 @@
 
             {{-- Schedule Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSchedule"
+                <a class="nav-link collapsed {{ request()->is('schedule*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseSchedule"
                     aria-expanded="true" aria-controls="collapseSchedule">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Schedule</span>
@@ -77,15 +77,15 @@
             
             {{-- News Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa fa-newspaper"></i>
                     <span>News</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('news.list')}}">News List</a>
-                        <a class="collapse-item" href="{{route('news.create')}}">Add News</a>
+                        <a class="collapse-item {{ request()->is('news') ? 'active' : ''}}" href="{{route('news.list')}}">News List</a>
+                        <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">Add News</a>
                     </div>
                 </div>
             </li>

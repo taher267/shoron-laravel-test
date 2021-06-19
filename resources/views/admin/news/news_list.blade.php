@@ -64,7 +64,13 @@
                             <td>{{$news->cat_id}}</td>
                             <td>
                                 <a class="btn px-3" href="{{route('news.edit', $news->slug)}}"><i class="fa fa-edit"></i> Edit</a>
-                                <a class="btn px-3" href="{{$news->id}}"><i class="fa fa-trash"></i> Delete</a>
+                                {{-- Delete News --}}
+                                {!! Form::open(['route' => ['news.destroy', $news->slug], 'method' => 'delete']) !!}
+                                <button title="{{$news->slug}}" class="btn-warning btn" onclick="return confirm('Are you Sure to delete {{$news->title}}?')" type="submit"><i class="fa fa-trash"></i> Delt</button>
+
+                                {{-- {!! Form::submit('Delete', ['class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!} --}}
+
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                         @endforeach
