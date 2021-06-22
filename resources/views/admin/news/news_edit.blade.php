@@ -39,7 +39,7 @@
             
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-object-group text-primary"></i></span>
-                {!! Form::select('cat_id', $categories, null, ['class' => 'form-control text-capitalize', 'placeholder' => 'Select Category']) !!}
+                {!! Form::select('cat_id', $categories, null, ['class' => 'form-control text-capitalize ', 'placeholder' => 'Select Category', 'id'=> 'news_category']) !!}
             </div>
             
             <div class="input-group mb-3">

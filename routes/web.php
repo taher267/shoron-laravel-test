@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function() {
     return view('admin.day.day');
-});
+})->name('dashboard');
 //Login resource
 Route::get('/login/admin', [LoginController::class, 'login'])->name('admin.login');
 Route::post('/login/admin', [LoginController::class, 'authenticate'])->name('admin.authenticate');
@@ -49,23 +49,21 @@ Route::get('/trainer', [TrainerController::class, 'index'])->name('trainers');
 
 Route::get('/classes', [CourseClassController::class, 'index'])->name('classes');
 Route::get('/classes/{id}', [CourseClassController::class, 'show'])->where('id', '[0-9]+')->name('classe.details');
-Route::get('/classes/category/{id}', [CourseClassController::class, 'category'])->where('id', '[0-9]+')->name('classes.category');
+// Route::get('/classes/category/{id}', [CourseClassController::class, 'category'])->where('id', '[0-9]+')->name('classes.category');
 
 
 //news menu page
 
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 
-//news details using for public/home
-Route::get('/news/details/{slug}', [NewsController::class, 'newsdetails'])->name('news.details');
 
-// Route::get('news/category/{id}', [NewsController::class, 'show'])->where('id','[0-9]+')->name('news.category');
+//News Details
+Route::get('/news/details/{details}', [NewsController::class, 'show'])->name('news.show');
 
-Route::get('/news/category/{slug}', [NewsController::class, 'show'])->name('news.category');
-
-
-
-
+//Category wise newses
+Route::get('/news/{category}', [NewsController::class, 'categorynews'])->name('news.category');
+//Category wise news Details
+Route::get('/news/{caregory}/{details}', [NewsController::class, 'categorynewsdetails'])->name('news.category.show');
 //Admin dashboard news Table
 Route::get('news/table', [NewsController::class, 'newslist'])->name('news.list');
 //Admin dashboard/admin news create
@@ -77,7 +75,9 @@ Route::get('/news/edit/{slug}', [NewsController::class, 'edit'])->name('news.edi
 Route::put('/news/update/{slug}', [NewsController::class, 'update'])->name('news.update');
 //News delete for admin/Dashboard
 Route::delete('/news/destroy/{slug}', [NewsController::class, 'destroy'] )->name('news.destroy');
+//category Resource
 
+Route::resource('category', CategoryController::class);
 
 Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
 

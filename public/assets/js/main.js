@@ -1,5 +1,6 @@
 
 jQuery(document).ready(function(){
+     //$('#news_categoty').val("option :first-child").val()= '0';
   jQuery('.freature_slide').owlCarousel({
     items:3,
     margin:33,

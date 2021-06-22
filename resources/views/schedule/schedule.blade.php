@@ -17,8 +17,10 @@
         </div>
     </div>
 </div>
-
-{{$schedule}}
+{{-- 
+@foreach ($schedule as $record)
+    {{$var = $record->day_id==1}}
+@endforeach --}}
 <!-- End  Breadcrumbs Banner -->
 <!-- Start CLASS SCHEDULE sec -->
 <div class="classSch-outer schedulePage my-5">
@@ -38,13 +40,14 @@
             @endforeach
             @endisset
         </ul>
-
+{{-- {{$schedule[0]->id}} --}}
+@foreach ($schedule as $record)
+    {{$record}}
+@endforeach
         <div class="tab-content" id="pills-tabContent">
             @isset( $schedule )
             @foreach ( $schedule as $data )
-
-            @if ( $data->day->id ==1 )
-            
+            @if ( $data->day->id ==1 )            
                 <div class="tab-pane fade show active" id="pills-{{$data->day->day}}" role="tabpanel" aria-labelledby="pills-{{$data->day->day}}-tab">
                 <table class="table table-striped">
                     <tbody>

@@ -50,7 +50,12 @@
                 {!! Form::submit('Add News', ['class' => 'form-control btn btn-primary']) !!}
             </div>
             {!! Form::close() !!}
+            <script>
+                document.querySelectorAll('select option')[0].value = "111";
+
+            </script>
         </div>
     </div>
 </div>
+
 @stop

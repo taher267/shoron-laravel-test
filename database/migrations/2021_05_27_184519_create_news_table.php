@@ -13,7 +13,8 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        if (!Schema::hasTable('news')) {
+            Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title', 120);
             $table->string('slug');
@@ -21,8 +22,11 @@ class CreateNewsTable extends Migration
             $table->string('image')->default('default.png');
             $table->foreignId('cat_id')->default(0);
             $table->string('date');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
+        }
+        
     }
 
     /**
@@ -31,7 +35,10 @@ class CreateNewsTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
+        // Schema::table('news', function( $table) {
+        //     $table->boolean('status')->after('date')->default(0);
+        // });
         Schema::dropIfExists('news');
     }
 }

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin</title>
+    <title>@yield('title', 'Admin')</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -45,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('dashboard')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -54,9 +54,7 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <div class="sidebar-heading">Interface</div>
 
             <!-- Nav Item - Pages Collapse Menu -->
 
@@ -77,18 +75,34 @@
             
             {{-- News Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="{{route('news.list')}}" data-toggle="collapse" data-target="#collapseNews"
+                    aria-expanded="true" aria-controls="collapseNews">
                     <i class="fa fa-newspaper"></i>
                     <span>News</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseNews" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ request()->is('news') ? 'active' : ''}}" href="{{route('news.list')}}">News List</a>
+                        <a class="collapse-item {{ request()->is('news/table') ? 'active' : ''}}" href="{{route('news.list')}}">News List</a>
                         <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">Add News</a>
                     </div>
                 </div>
             </li>
+            {{-- News End --}}
+            {{-- Category Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('category*') ? 'menu_active' : ''}}" href="{{route('category.index')}}" data-toggle="collapse" data-target="#collapseCategory"
+                    aria-expanded="true" aria-controls="collapseCategory">
+                    <i class="fa fa-cubes"></i>
+                    <span>Category</span>
+                </a>
+                <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ request()->is('category') ? 'active' : ''}}" href="{{route('category.index')}}">Category List</a>
+                        <a class="collapse-item {{ request()->is('category/create') ? 'active' : ''}}" href="{{route('category.create')}}">Add Category</a>
+                    </div>
+                </div>
+            </li>
+            {{-- Category End --}}
 
 
             <!-- Divider -->

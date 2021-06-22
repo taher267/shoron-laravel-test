@@ -61,7 +61,28 @@ class NewsController extends Controller
         //get form image
         $image = $request->file('image');
         $slug = Str::slug($request->title);
+        //////////////
+        // $is_exist_in_new_table= News::where('slug', $slug)->get();
+        //return 
+        // $only_slug = News::all();
+        // $arr =[];
+        // foreach($only_slug as $slug){
+        //     $arr[$slug->id]=$slug->slug;
+        // }
+        // var_dump($arr);
+        //return array_count_values($arr);
 
+        // exit();
+        // if ($is_exist_in_new_table) {
+        //     $str =$is_exist_in_new_table[0]->slug;
+        //     // print_r($str); exit();
+
+        //     $exist = $this->get_file_extension($str);
+        //     print_r($exist); exit();
+        // }
+        // else{return "no";}
+        // return $slug; exit();
+        ////////////////////////
          if (isset($image)) {
             //make unique name of image
              $currentData = Carbon::now()->toDateString();
@@ -79,13 +100,15 @@ class NewsController extends Controller
             $imageName = 'default.png';
          }
 
-         $insertNews = new News();
+         $insertNews = new News();        
+
          $insertNews->title         = $request->title;
          $insertNews->description   = $request->description;
-         $insertNews->cat_id        = $request->cat_id;
+         $insertNews->cat_id        =($request->cat_id) ? $request->cat_id:'0';   
          $insertNews->date          = Carbon::now()->format('M-d-Y');
-         $insertNews->slug          = $slug;
+        $insertNews->slug           = $slug. "-". News::orderBy('id', 'desc')->first()->id+1;
          $insertNews->image         = $imageName;
+         // return $insertNews;
          $insertNews->save();
 
          Session()->flash('msg', "News Has been added!!");
@@ -99,30 +122,63 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($details)
     {
+     
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
-        return $this->data['cateNews']= News::where('slug', $slug)->get();
-
-        // return $this->data['cateNews']= News::where('cat_id', '=', $id)->get();
-        $this->data['categories'] = Category::all();
-        return view('news.news', $this->data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function newsdetails($slug)
-    {
-        $this->data['ouraddress'] = OurAddress::findOrFail(1);
-        $this->data['news_details']= News::where('slug', $slug)->get();
+        $this->data['news_details']= News::where('slug', $details)
+                        ->where('status', '=', '1')
+                        ->get();;
         // $this->data['news_details']= News::findOrFail($id);
         $this->data['categories'] = Category::all();
         // return $this->data;
-        return view('news.news', $this->data);
+        return view('news.news_details', $this->data);   
+
+    }
+
+    /**
+     * Display Newses category wise.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function categorynews($category)
+    {
+
+        $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        $category_id                 = Category::where('slug', $category)->get();
+        // return $category_id; 
+        // exit();
+        $this->data['cateNews']   = News::where('cat_id', '=', $category_id[0]
+                                    ->id)
+                                    ->where('status', '=', '1')
+                                    ->get();;
+        $this->data['categories'] = Category::all();
+
+        return view('news.category_news', $this->data);
+    }
+
+    /**
+     * Display News details category wise.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function categorynewsdetails($catslug, $details)
+    {
+
+        $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        $category                 = Category::where('slug', $catslug)->get();
+        
+        $this->data['cateNewsDetails']   = News::where('cat_id', '=', $category[0]->id)
+                                    ->where('status', '=', '1')
+                                    ->get();
+        $this->data['categories'] = Category::all();
+        
+        // echo '<pre>';
+        // var_dump($cateNews);
+        // echo '</pre>';
+        return view('news.category_news_details', $this->data);
     }
 
     /**
@@ -189,9 +245,7 @@ class NewsController extends Controller
 
          if (isset($image)) {
             //make unique name of image
-             $currentData = Carbon::now()->toDateString();
-
-             $imageName = $up_slug . '-' . $currentData . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+             $imageName = $up_slug . '-' . Carbon::now()->toDateString() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
              //check news dir is exists
              if (!Storage::disk('public')->exists('assets/news')) {
@@ -199,30 +253,34 @@ class NewsController extends Controller
              }
              // var_dump($news_up[0]->image); exit();
              //delete old news image
-             if (Storage::disk('public')->exists('assets/news/' . $news_up[0]->image)) {
+             if (Storage::disk('public')->exists('assets/news/' . $news_up[0]->image) && $news_up[0]->image != 'default.png' ) {
                  Storage::disk('public')->delete('assets/news/' . $news_up[0]->image);
              }
 
-             //resize image for news and upload
+             //Resize image for news and upload
              $resizeNews = Image::make($image)->resize(1600,500)->save(90);
              Storage::disk('public')->put('assets/news/' . $imageName, $resizeNews);
          }else{
             $imageName = $news_up[0]->image;
          }
-         
+        
+         //Random Slug for unique 
+
+         $rand_slug = $up_slug . "-". $news_up[0]->id;
          $update = [
             'title'         => $request->title,
             'description'   => $request->description,
-            'cat_id'        => $request->cat_id,
+            'cat_id'        => ($request->cat_id) ? $request->cat_id:'0',
             'date'          => Carbon::now()->format('M-d-Y'),
-            'slug'          => $up_slug,
+            'slug'          => $rand_slug,
             'image'         => $imageName,
          ];
+         // return $update; exit();
 
          // update query using slug
          if ( News::where('slug', $slug)->update($update) ) {
              Session()->flash('msg', "News Has been Updated!!");
-             return redirect()->route('news.edit', $up_slug);
+             return redirect()->route('news.edit', $rand_slug);
              }
         
     }

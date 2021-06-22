@@ -11,4 +11,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public $data = [];
+
+    function get_file_extension($file_name, $slizer = '-') {
+        $exploded =explode($slizer,$file_name);
+        return end($exploded);
+    }
 }

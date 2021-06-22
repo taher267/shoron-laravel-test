@@ -18,4 +18,9 @@ class News extends Model
     {
         return $this->hasMany(Category::class)->withTimestamps();
     }
+
+    public function newscategory()
+    {
+        return $this->belongsTo(Category::class, 'cat_id', 'id');
+    }
 }
