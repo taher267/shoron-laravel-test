@@ -25,7 +25,7 @@
                 @foreach($trainers as $trainer)
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12  trainer_box">
                     <div class="feature">
-                        <img class="col-xs-w-100" src="{{asset($trainer->trainer_image)}}">
+                        <img class="col-xs-w-100" src="{{asset('storage/assets/trainer/' . $trainer->trainer_image)}}">
                     </div>
                     <span class="trainer_name">{{$trainer->name}}</span>
                 </div>

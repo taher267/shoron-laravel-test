@@ -16,7 +16,7 @@ class CreateNewsTable extends Migration
         if (!Schema::hasTable('news')) {
             Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 120);
+            $table->string('title', 120)->default('Uncategory');
             $table->string('slug');
             $table->longText('description')->nullable();
             $table->string('image')->default('default.png');

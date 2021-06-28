@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'News Details')
+@section('title', 'News')
 @section('main_content')
 <!-- Start Breadcrumbs Banner -->
 <div class="breadcrumbs_banner news_banner div_bg" style="background: url({{asset('assets/images/trainers-banner.png')}});">
@@ -24,19 +24,48 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-sm-12">
-                <div class="news_left @if(isset($news_details)){{'news_details'}} @endif">
+                <div class="news_left news_list @if(isset($news_details)){{'news_details'}} @endif">
+                    <div class="row">
+                        @if (isset($newses))
+                        @foreach($newses as $news)
+                        @if ($news->status=="1")
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="news_box">
+                                <div class="featured">
+                                    <img class="mw-100 h-300" src="{{asset('storage/assets/news/'. $news->image)}}" alt="">
+                                    <div class="date">
+                                        @if ($news->date)
+                                          @foreach(explode('-', $news->date) as $date) 
+                                            <span class="date_per text-uppercase">{{$date}}</span>
+                                          @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <h4>{!! $news->title? $news->title:'' !!}</h4>
+                                @if($news->description)
+                                <p>{{ $news->description }} <a href="{{ route('news.show',[$news->slug]) }} ">Read More... </a></p>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
+                        @endif
+                    </div>
+                    {{-- Category news end --}}
                     @if (isset($news_details))
                     @foreach ($news_details as $news)
                     @if($news->status==1)
                     {{-- Start Single News details or Single news Page --}}
                     <div class="feature p-b-25"><img class="w-100" src="{{asset('storage/assets/news/'. $news->image)}}" class="img-responsive" alt=""></div>
                     <h2>{{$news->title}}</h2>
+                    <h2>{{$news->id}}</h2>
                     <ul class="post_detail item_details">
                         <li><span class="fa fa-user"></span> Jhon Doe</li>
-                        <li><span class="fa fa-calendar"></span> {{$news->created_at}}</li>
+                        <li><span class="fa fa-calendar"></span> December 30, 2016</li>
                         <li><span class="fa fa-comments"></span> Comments : 01</li>
                     </ul>
                     <p>{{$news->description}}</p>
+
                     <div class="comments-wrapper">
                         <h3>2 Comments</h3>
                         <ul class="row comments">
@@ -73,13 +102,15 @@
                             </form>
                         </div>
                         {{-- End Single News details or Single news Page --}}
+
                         @endif
-                        @endforeach
+                    @endforeach
                         @endif
+                    </div>
                 </div>
+                <div class="col-sm-4 col-xs-12">
+                    @include('sidebar.sidebar')
             </div>
-            <div class="col-sm-4 col-xs-12">
-                @include('sidebar.sidebar')
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@
                                         <a class="nav-link" href="{{route('schedule.index')}}">Schedule</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('trainer*') ? 'active' : ''}}" href="{{route('trainers')}}">Trainers</a>
+                                        <a class="nav-link {{ request()->is('trainers*') ? 'active' : ''}}" href="{{route('trainers')}}">Trainers</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link
@@ -37,7 +37,7 @@
                                         " href="{{route('news')}}">News</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('contact*') ? 'active' : ''}}" href="{{route('contact')}}">Contact Us</a>
+                                        <a class="nav-link {{ request()->is('contact-form*') ? 'active' : ''}}" href="{{route('contact.form')}}">Contact Us</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->is('login*') ? 'active' : ''}}" href="{{route('admin.login')}}">Login</a>

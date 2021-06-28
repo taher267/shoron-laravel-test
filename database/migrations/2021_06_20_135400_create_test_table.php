@@ -29,9 +29,11 @@ class CreateTestTable extends Migration
      */
     public function down()
     {
-        Schema::table('test', function ($table) {
-            $table->boolean('status')->default(0)->after('created_at');
-        });
+        // Schema::table('test', function ($table) {
+        //     $table->boolean('status')->default(0)->after('created_at');
+        // });
+
+        Schema::dropIfExists('text');
 
     }
 }

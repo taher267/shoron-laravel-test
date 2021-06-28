@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\NewsRequest;
 use App\Models\Category;
 use App\Models\News;
@@ -147,12 +146,8 @@ class NewsController extends Controller
 
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $category_id                 = Category::where('slug', $category)->get();
-        // return $category_id; 
-        // exit();
-        $this->data['cateNews']   = News::where('cat_id', '=', $category_id[0]
-                                    ->id)
-                                    ->where('status', '=', '1')
-                                    ->get();;
+        $this->data['cateNews']   = News::where('cat_id', '=', $category_id[0]->id)->where('status', '=', '1')
+                                    ->get();
         $this->data['categories'] = Category::all();
 
         return view('news.category_news', $this->data);
@@ -188,19 +183,14 @@ class NewsController extends Controller
      */
     public function newslist()
     {
+        
         $this->data['pageHead'] = 'News List';
         $this->data['newslist'] = News::all();
 
         // $this->data['categories'] = Category::all();
+
         return view('admin.news.news_list', $this->data);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     
 /**
      * Show the form for editing the specified resource.

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class CourseClassController extends Controller
 {
+    
+
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +18,9 @@ class CourseClassController extends Controller
      */
     public function index()
     {
-        $this->data['ouraddress'] = OurAddress::findOrFail(1);
-        $this->data['courses']= CourseClass::all();
-        return view('course.course', $this->data);
+        $pageHead = 'All Classes';
+        $classes= CourseClass::all()->sortByDesc('id');
+        return view('admin.class.class_list', compact('classes', 'pageHead'));
     }
 
     /**
@@ -28,7 +30,7 @@ class CourseClassController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -50,11 +52,13 @@ class CourseClassController extends Controller
      */
     public function show($id)
     {
-        $this->data['ouraddress'] = OurAddress::findOrFail(1);
-        $this->data['class_details']= CourseClass::findOrFail($id);
-        $this->data['categories'] = Category::all();
-        return view('course.course', $this->data);
+        // $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        // $this->data['class_details']= CourseClass::findOrFail($id);
+        // $this->data['categories'] = Category::all();
+        // return view('course.course', $this->data);
     }
+
+     
 
     /**
      * Show the form for editing the specified resource.
@@ -77,7 +81,9 @@ class CourseClassController extends Controller
     }
     public function edit($id)
     {
-        //
+        $pageHead = 'New Class';
+        $class = CourseClass::findOrFail($id);
+        return view('admin.class.class_edit', compact('class', 'pageHead'));
     }
 
     /**
@@ -101,5 +107,31 @@ class CourseClassController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function classes()
+    {
+        $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        $this->data['courses']= CourseClass::all();
+        return view('course.course', $this->data);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function classdetails($id)
+    {
+        $this->data['ouraddress'] = OurAddress::findOrFail(1);
+        $this->data['class_details']= CourseClass::findOrFail($id);
+        $this->data['categories'] = Category::all();
+        return view('course.course', $this->data);
     }
 }

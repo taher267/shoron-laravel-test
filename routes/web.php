@@ -45,11 +45,15 @@ Route::get('/about', [App\Http\Controllers\AboutUsController::class, 'index'])->
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/trainer', [TrainerController::class, 'index'])->name('trainers');
+Route::get('/trainers', [TrainerController::class, 'trainers'])->name('trainers');
 
-Route::get('/classes', [CourseClassController::class, 'index'])->name('classes');
-Route::get('/classes/{id}', [CourseClassController::class, 'show'])->where('id', '[0-9]+')->name('classe.details');
+//Trainers Resource for Admin/Dashboard
+Route::resource('/dashboard/trainer', TrainerController::class);
+
+Route::get('/classes', [CourseClassController::class, 'classes'])->name('classes');
+Route::get('/classes/{id}', [CourseClassController::class, 'classdetails'])->where('id', '[0-9]+')->name('classe.details');
 // Route::get('/classes/category/{id}', [CourseClassController::class, 'category'])->where('id', '[0-9]+')->name('classes.category');
+Route::resource('/dashboard/class', CourseClassController::class);
 
 
 //news menu page
@@ -65,7 +69,7 @@ Route::get('/news/{category}', [NewsController::class, 'categorynews'])->name('n
 //Category wise news Details
 Route::get('/news/{caregory}/{details}', [NewsController::class, 'categorynewsdetails'])->name('news.category.show');
 //Admin dashboard news Table
-Route::get('news/table', [NewsController::class, 'newslist'])->name('news.list');
+Route::get('/dashboard/news', [NewsController::class, 'newslist'])->name('news.list');
 //Admin dashboard/admin news create
 Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
 
@@ -75,18 +79,15 @@ Route::get('/news/edit/{slug}', [NewsController::class, 'edit'])->name('news.edi
 Route::put('/news/update/{slug}', [NewsController::class, 'update'])->name('news.update');
 //News delete for admin/Dashboard
 Route::delete('/news/destroy/{slug}', [NewsController::class, 'destroy'] )->name('news.destroy');
+
 //category Resource
+Route::resource('/category', CategoryController::class);
 
-Route::resource('category', CategoryController::class);
-
-Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
-
-
-// Route::get('post/create', [PostController::class, 'create'])->name('post.create');
-// Route::post('post/create', [PostController::class, 'store'])->name('post.store');
-
-// Route::get('post/list', function() {
-//     return view('post_list');
-// });
+//contact or contact us Resource
+Route::resource('/dashboard/contact', ContactUsController::class);
 
 
+
+Route::get('/contact-form',[ContactUsController::class, 'contactform'])->name('contact.form');
+
+Route::post('/contactform',[ContactUsController::class, 'contactsend'])->name('contact.send');

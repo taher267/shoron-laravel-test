@@ -14,7 +14,7 @@
                 @endisset
             </div>
             <div class="col-lg-6">
-                <div class="d-flex flex-row-reverse"><a class="btn btn-primary mb-3 text-right" href="{{route('time.create')}}" title="">Add Time <i class="fa fa-plus"></i></a>
+                <div class="d-flex flex-row-reverse"><a class="btn btn-primary mb-3 text-right" href="{{route('trainer.create')}}" title="">New Trainer <i class="fa fa-plus"></i></a>
             </div>
         </div>
         
@@ -24,49 +24,47 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@if(session('msg'))
+    <div class="alert alert-primary">
+        {{session('msg')}}
+    </div>
+    @endif</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-                    <ul class="tabs schedule_tabs">
-                        @foreach ($days as $day)
-                           <li class="mx-2"><a class="btn bg-secondary text-capitalize border-0 text-light px-3" href="#{{$day}}" title="{{$day}}">{{$day}}</a></li> 
-                        @endforeach
-                        
-                    </ul>
                     <thead class="text-center">
                         <tr>
-                            <th>Course</th>
-                            <th>Time</th>
-                            <th>Trainer</th>
-                            <th>Day</th>
-                            <th>Join</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Class Time</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot class="text-center">
                     <tr>
-                        <th>Course</th>
-                        <th>Time</th>
-                        <th>Trainer</th>
-                        <th>Day</th>
-                        <th>Join</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Class Time</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                        @isset ( $schedule )
-                        @foreach ($schedule as $time)
+                        @isset ( $trainers )
+                        @foreach ($trainers as $trainer)
                         <tr class="text-center text-capitalize">
-                            <td>{{ $time->course->title }}</td>
-                            <td>{{$time->time}}</td>
-                            <td>{{$time->trainer->name}}</td>
-                            <td>{{$time->day->day}}</td>
-                            <td><a class="btn px-3" href="{{route('contact.form')}}" title="">Join Now</a></td>
+                            <td>{{ $trainer->name }}</td>
+                            <td><img class="w-50 h_100" src="{{asset('storage/assets/trainer/'. $trainer->trainer_image)}}" alt="trainer Feature"></td>
+                            <td>{{ $trainer->trainerclasstime->time }}</td>
                             <td>
-                                <a class="btn px-3" href="{{$time->id}}"><i class="fa fa-edit"></i> Edit</a>
-                                <a class="btn px-3" href="{{$time->id}}"><i class="fa fa-trash"></i> Delete</a>
+                                <a class="btn px-3" href="{{route('trainer.edit', $trainer->id)}}"><i class="fa fa-edit"></i> Edit</a>
+                                {{-- Delete trainer --}}
+                                {!! Form::open(['route' => ['trainer.destroy', $trainer->id], 'method' => 'delete']) !!}
+                                <button title="{{$trainer->id}}" class="btn-warning btn" onclick="return confirm('Are you Sure to delete {{$trainer->name}}?')" type="submit"><i class="fa fa-trash"></i> Delt</button>
+
+                                {{-- {!! Form::submit('Delete', ['class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!} --}}
+
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                         @endforeach

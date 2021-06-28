@@ -37,16 +37,15 @@ class ClassTime extends Model
         return $this->hasOne(CourseClass::class, 'id', 'class_id');
     }
 
-    // for ClassTime models
-    // public function time()
-    // {
-    //     return $this->belongsTo(ClassTime::class);
-    // }
-
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class, 'foreign_key', 'other_key');
-    // }
+    public static function classTimesArr()
+    {
+        $arr = [];
+        $times = ClassTime::all();
+        foreach ($times as $time) {
+            $arr[$time->id] = $time->time;
+        }
+        return $arr;
+    }
 
 
 

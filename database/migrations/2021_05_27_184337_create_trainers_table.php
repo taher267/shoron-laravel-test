@@ -16,9 +16,11 @@ class CreateTrainersTable extends Migration
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 250);
-            $table->foreignId('trainer_id')->nullable();
+            $table->foreignId('class_time_id')->nullable();
             $table->string('trainer_image', 250);
+            $table->boolean('stauts')->default(1);
             $table->string('type', 100);
+            $table->foreignId('approved_by')->nullable();
             $table->timestamps();
         });
     }

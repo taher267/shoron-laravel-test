@@ -72,7 +72,23 @@
                     </div>
                 </div>
             </li>
-            
+            {{-- Schedule menu end --}}
+            {{-- Course Class Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('class*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseClass"
+                    aria-expanded="true" aria-controls="collapseClass">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Classes</span>
+                </a>
+                <div id="collapseClass" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('class.index')}}">All Classes</a>
+                        <a class="collapse-item" href="{{route('class.create')}}"><i class="fa fa-plus"></i> New Class</a>
+                    </div>
+                </div>
+            </li>
+            {{-- Course class end --}}
+
             {{-- News Menu --}}
             <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="{{route('news.list')}}" data-toggle="collapse" data-target="#collapseNews"
@@ -83,7 +99,7 @@
                 <div id="collapseNews" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item {{ request()->is('news/table') ? 'active' : ''}}" href="{{route('news.list')}}">News List</a>
-                        <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">Add News</a>
+                        <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">New News</a>
                     </div>
                 </div>
             </li>
@@ -98,12 +114,45 @@
                 <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item {{ request()->is('category') ? 'active' : ''}}" href="{{route('category.index')}}">Category List</a>
-                        <a class="collapse-item {{ request()->is('category/create') ? 'active' : ''}}" href="{{route('category.create')}}">Add Category</a>
+                        <a class="collapse-item {{ request()->is('category/create') ? 'active' : ''}}" href="{{route('category.create')}}">New Category</a>
                     </div>
                 </div>
             </li>
-            {{-- Category End --}}
+            {{-- Category End --}}   
 
+            {{-- contact Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('contact*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseContact"
+                    aria-expanded="true" aria-controls="collapseContact">
+                    <i class="fa fa-cubes"></i>
+                    <span>Contact Us</span>
+                </a>
+                <div id="collapseContact" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a title="For Contact Page" class="collapse-item {{ request()->is('contact*') ? 'active' : ''}}" href="{{route('contact.index')}}">Contact us</a>
+
+                        <a class="collapse-item {{-- request()->is('contact/create') ? 'active' : ''--}}" href="{{route('contact.create')}}">New Contact</a>
+                    </div>
+                </div>
+            </li>
+            {{-- Contact End --}}
+
+            {{-- trainer Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('trainer*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseTrainer"
+                    aria-expanded="true" aria-controls="collapseTrainer">
+                    <i class="fa fa-cubes"></i>
+                    <span>Trainer</span>
+                </a>
+                <div id="collapseTrainer" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a title="For trainer Page" class="collapse-item {{ request()->is('trainer*') ? 'active' : ''}}" href="{{route('trainer.index')}}">Trainer</a>
+
+                        <a class="collapse-item " href="{{route('trainer.create')}}">New Trainer</a>
+                    </div>
+                </div>
+            </li>
+            {{-- Contact End --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider">

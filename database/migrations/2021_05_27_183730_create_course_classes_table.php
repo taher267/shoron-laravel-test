@@ -18,10 +18,13 @@ class CreateCourseClassesTable extends Migration
             $table->string('title', 250)->nullable();
             $table->string('image', 250)->nullable();
             $table->string('type', 100);
+            $table->boolean('status')->default(1);
+            $table->string('slug',255);
             $table->date('date');
             $table->time('time');
-            $table->foreignId('class_time_id')->nullable();
+            $table->foreignId('class_time')->nullable();
             $table->foreignId('build_id')->nullable();
+            $table->foreignId('trainer')->nullable();
             $table->timestamps();
         });
     }
