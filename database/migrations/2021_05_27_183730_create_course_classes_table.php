@@ -20,7 +20,7 @@ class CreateCourseClassesTable extends Migration
             $table->string('type', 100);
             $table->boolean('status')->default(1);
             $table->string('slug',255);
-            $table->date('date');
+            $table->string('date');
             $table->time('time');
             $table->foreignId('class_time')->nullable();
             $table->foreignId('build_id')->nullable();

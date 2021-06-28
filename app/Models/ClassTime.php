@@ -37,6 +37,7 @@ class ClassTime extends Model
         return $this->hasOne(CourseClass::class, 'id', 'class_id');
     }
 
+    //Class time Array select option
     public static function classTimesArr()
     {
         $arr = [];

@@ -26,7 +26,7 @@
                 @foreach( $courses as $course)
                 <div class="col-lg-4 col-sm-6 col-xs-12 mb-4 feature_box">
                     <div class="feature">
-                        <img src="{{asset($course->image)}}">
+                        <img src="{{asset('storage/assets/class/' . $course->image)}}">
                         <div class="time_box">
                             <span class="date"><span>16 dec</span></span>
                             <span class="time"><span>6:30 am</span></span>
@@ -42,7 +42,7 @@
                 <!-- News Details Start -->
                 <div class="col-sm-8 col-xs-12">
                     <div class="news_left">
-                    <feature class="pb-3 d-block"><img class="w-100" src="{{asset($class_details->image)}}" alt=""></feature>
+                    <feature class="pb-3 d-block"><img class="w-100" src="{{asset('storage/assets/class/' . $class_details->image)}}" alt=""></feature>
                     <h2>Leg Workout</h2>
                     <ul class="post_detail item_details">
                         <li><span class="fa fa-calendar"></span> Class Time : 10.00 AM - 11.00 AM</li>

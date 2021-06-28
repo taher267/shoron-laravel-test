@@ -20,7 +20,7 @@
         {{-- {{$class->id}} --}}
         
         <div class="col-lg-8 justify-content-between">
-            {!! Form::model($class, [ 'route' => ['news.update', $class->id], 'method' => 'PUT' , 'enctype' => "multipart/form-data" ]) !!}
+            {!! Form::model($class, [ 'route' => ['class.update', $class->id], 'method' => 'PUT' , 'enctype' => "multipart/form-data" ]) !!}
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-heading text-primary"></i></span>
                 {!! Form::text('title', NULL, ['class' => 'form-control ', 'placeholder' => 'Edit Title']) !!}
@@ -29,7 +29,6 @@
                 <span class="input-group-text"><i class="fas fa-audio-description text-primary"></i></span>
                 {!! Form::text('description', NULL, ['class' => 'form-control ', 'placeholder' => 'Edit Desctiption']) !!}
             </div>
-            {{-- <img class="w-50" src="{{asset('storage/assets/news/'. $class[0]->image)}}" alt=""> --}}
 
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-image text-primary"></i></span>
@@ -43,8 +42,13 @@
             </div>
             
             <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fas fa-object-group text-primary"></i></span>
-                {{-- {!! Form::select('cat_id', $categories, null, ['class' => 'form-control text-capitalize ', 'placeholder' => 'Select Category', 'id'=> 'news_category']) !!} --}}
+                <span class="input-group-text"><i class="fas fa-user text-primary"></i></span>
+                {!! Form::select('trainer', $trainer, null, ['class' => 'form-control text-capitalize ', 'placeholder' => 'Select Option', 'id'=> 'trainer']) !!}
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-clock text-primary"></i></span>
+                {!! Form::select('class_time', $classtime, null, ['class' => 'form-control text-capitalize ', 'placeholder' => 'Select Option', 'id'=> 'class_time']) !!}
             </div>
             
             <div class="input-group mb-3">

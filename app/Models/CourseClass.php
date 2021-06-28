@@ -11,7 +11,7 @@ class CourseClass extends Model
     use HasFactory;
 
     //for different table name
-
+    protected $fillable = ['title', 'description', 'slug', 'class_time', 'trainer', 'date', 'time'];
     // protected $table = 'different_table';
 
      public function classTimes()

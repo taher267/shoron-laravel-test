@@ -219,7 +219,6 @@ class NewsController extends Controller
         $this->validate($request, [
             'title'         => 'required|',
             'description'   => 'string|nullable',
-            'description'   => 'string|nullable',
             'cat_id'        => 'numeric|nullable',
             'image'         => 'image|mimes:jpeg,png,jpg|max:1024',
         ]);
