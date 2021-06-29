@@ -81,21 +81,21 @@
                 <!-- News Details End -->
                 @endif
                 {{-- Category Class Start --}}                
-                @if (isset($cateclass))
+                @if (isset($cateClass))
                 <div class="col-lg-8">
                     <div class="row">
-                @foreach( $cateclass as $CClass)
-                
-                        <div class="col-lg-6 col-sm-6 col-xs-12 mb-4 feature_box">
+                @foreach( $cateClass as $class)
+                {{-- {{$cateClass}} --}}
+                <div class="col-lg-6 col-sm-6 col-xs-12 mb-4 feature_box">
                     <div class="feature">
-                        <img src="{{asset($CClass->image)}}">
+                        <img src="{{asset('storage/assets/class/' . $class->image)}}">
                         <div class="time_box">
                             <span class="date"><span>16 dec</span></span>
                             <span class="time"><span>6:30 am</span></span>
                         </div>
                     </div>
-                    <h4><a href="{{url('classes/details' . '/'. $CClass->id)}}" >{{$CClass->title}}</a></h4>
-                    <p>{{$CClass->description}}. <a href="{{ route('classe.details', ['id' =>$CClass->id])}}">Read More...</a></p>
+                    <h4><a href="{{url('classes/details' . '/'. $class->id)}}" >{{$class->title}}</a></h4>
+                    <p>{{$class->description}}. <a href="{{ route('class.category.show',[$class->classcategory->slug, $class->slug])}}">Read More...</a></p>
                 </div>
                 @endforeach
                     </div>
@@ -105,13 +105,11 @@
                 @endif
 
 {{-- Category Class End --}}
-    @isset($categories)
                 {{-- Sidebar Start --}} 
                 <div class="col-sm-4 col-xs-12">
                     @include('sidebar.sidebar')
                 </div>
                 {{-- Sidebar End --}}
-                @endisset
      
             </div>
         </div>

@@ -26,7 +26,7 @@ class NewsController extends Controller
     {
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $this->data['newses'] = News::all();
-        $this->data['categories'] = Category::all();
+        $this->data['news_categories'] = Category::all();
         return view('news.news', $this->data);
     }
 
@@ -129,7 +129,7 @@ class NewsController extends Controller
                         ->where('status', '=', '1')
                         ->get();;
         // $this->data['news_details']= News::findOrFail($id);
-        $this->data['categories'] = Category::all();
+        $this->data['news_categories'] = Category::all();
         // return $this->data;
         return view('news.news_details', $this->data);   
 
@@ -148,7 +148,7 @@ class NewsController extends Controller
         $category_id                 = Category::where('slug', $category)->get();
         $this->data['cateNews']   = News::where('cat_id', '=', $category_id[0]->id)->where('status', '=', '1')
                                     ->get();
-        $this->data['categories'] = Category::all();
+        $this->data['news_categories'] = Category::all();
 
         return view('news.category_news', $this->data);
     }
@@ -168,7 +168,7 @@ class NewsController extends Controller
         $this->data['cateNewsDetails']   = News::where('cat_id', '=', $category[0]->id)
                                     ->where('status', '=', '1')
                                     ->get();
-        $this->data['categories'] = Category::all();
+        $this->data['news_categories'] = Category::all();
         
         // echo '<pre>';
         // var_dump($cateNews);

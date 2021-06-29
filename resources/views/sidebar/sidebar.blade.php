@@ -6,17 +6,27 @@
     <div class="category">
         <h3>Categories</h3>
         <ul>
-            @if (isset($categories))
-            @foreach($categories as $category)
+            {{-- News categories --}}
+            @if (isset($news_categories))
+            @foreach($news_categories as $category)
             @if($category->category)
             <li><a href="{{route('news.category', [$category->slug])}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
             @endif
             @endforeach
             @endif
-        </ul>
+
+            {{-- Class categories --}}
+            @if (isset($class_categories))
+            @foreach($class_categories as $category)
+            @if($category->category)
+            <li><a href="{{route('class.category', [$category->slug])}}"><i class="fa fa-long-arrow-alt-right"></i> {{$category->category}} </a></li>
+            @endif
+            @endforeach
+            @endif
+        </ul> 
     </div>
 
-    <div class="archives {{ request()->is('news*') ? 'd-block' : 'd-none'}}">
+    {{-- <div class="archives {{ request()->is('news*') ? 'd-block' : 'd-none'}}">
         <h3>Archives</h3>
         <ul>
             <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> February <span>2016(3)</span></a></li>
@@ -26,6 +36,7 @@
             <li><a href="#"><i class="fa fa-long-arrow-alt-right"></i> December <span>2016(3)</span></a></li>
         </ul>
     </div>
+     --}}
     <div class="pouplar-news">
         <h3>Popular NEWS</h3>
         <ul>

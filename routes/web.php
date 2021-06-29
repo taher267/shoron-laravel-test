@@ -51,8 +51,14 @@ Route::get('/trainers', [TrainerController::class, 'trainers'])->name('trainers'
 Route::resource('/dashboard/trainer', TrainerController::class);
 
 Route::get('/classes', [CourseClassController::class, 'classes'])->name('classes');
-Route::get('/classes/{id}', [CourseClassController::class, 'classdetails'])->where('id', '[0-9]+')->name('classe.details');
-// Route::get('/classes/category/{id}', [CourseClassController::class, 'category'])->where('id', '[0-9]+')->name('classes.category');
+Route::get('/classes/{slug}', [CourseClassController::class, 'classdetails'])->name('classe.details');
+//Category wise Classes
+Route::get('/class/{category}', [CourseClassController::class, 'categoryclasses'])->name('class.category');
+//Category wise Class Details
+Route::get('/class/{caregory}/{slug}', [CourseClassController::class, 'categoryclassdetails'])->name('class.category.show');
+
+
+//Dashboard or Admin
 Route::resource('/dashboard/class', CourseClassController::class);
 
 

@@ -19,6 +19,17 @@ class CourseClass extends Model
         return $this->hasMany(ClassTime::class);
     }
 
+    public function classdetailstime()
+    {
+        return $this->hasOne(ClassTime::class, 'id', 'class_time');
+    }
+
+    //
+    public function classcategory()
+    {
+        return $this->belongsTo(Category::class, 'build_id', 'id');
+    }
+
     /**
      * Getting array for select option of Schedule
      */

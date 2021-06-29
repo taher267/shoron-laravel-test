@@ -21,50 +21,20 @@
 <div class="feature_class new_detail_page">
     <div class="container">
         <div class="feature-list">
-            <div class="{{(isset($courses))?'freature_content':''}} row">
-                @if (isset($courses))
-                @foreach( $courses as $course)
-                <div class="col-lg-4 col-sm-6 col-xs-12 mb-4 feature_box">
-                    <div class="feature">
-                        <img src="{{asset('storage/assets/class/' . $course->image)}}">
-                        <div class="time_box">
-                            <span class="date">
-                                @if ($course->date)
-                                    <span class="">{{substr($course->date, 0, 6)}}</span>
-                                @endif
-
-                            </span>
-                            <span class="time">
-                                @if ($course->time)
-                                  @foreach(explode('-', $course->time) as $time) 
-                                    <span>{{substr($time, 0, 5)}}</span>
-                                  @endforeach
-                                  <span>
-                                      @if( substr( $course->time, 0,2 ) < 12) am
-                                      @else pm
-                                      @endif
-                                  </span>
-                                @endif
-                            </span>
-                        </div>
-                    </div>
-                    <h4><a href="{{url('classes/details' . '/'. $course->id)}}" >{{$course->title}}</a></h4>
-                    <p>{{$course->description}}. <a href="{{ url('classes' . '/' . $course->slug)}}">Read More...</a></p>
-                </div>
-                @endforeach
-                @endif
-
+            <div class="freature_content row">   
                 @if (isset($class_details))
-                <!-- News Details Start -->
+                @foreach ($class_details as $details)
+                <!-- Class Details Start -->
                 <div class="col-sm-8 col-xs-12">
                     <div class="news_left">
-                    <feature class="pb-3 d-block"><img class="w-100" src="{{asset('storage/assets/class/' . $class_details->image)}}" alt=""></feature>
+                    <feature class="pb-3 d-block"><img class="w-100" src="{{asset('storage/assets/class/' . $details->image)}}" alt=""></feature>
                     <h2>Leg Workout</h2>
                     <ul class="post_detail item_details">
-                        <li><span class="fa fa-calendar"></span> Class Time : 10.00 AM - 11.00 AM</li>
+                        <li><span class="fa fa-calendar"></span>{{--  Class Time : 10.00 AM - 11.00 AM --}}</li>
+                        <li>{{$details->classdetailstime->time}}</li>
                         <li><span class="fa fa-user"></span> Jhon Doe</li>
                     </ul>
-                    <p>{{$class_details->description}}</p>
+                    <p>{{$details->description}}</p>
                     
                     <div class="choose_building">
                         <h4>Why You Choose Body Building?</h4>
@@ -78,8 +48,10 @@
                     </div>
                 </div>
                 </div>
-                <!-- News Details End -->
+                @endforeach
+                <!-- Class Details End -->
                 @endif
+
                 {{-- Category Class Start --}}                
                 @if (isset($cateclass))
                 <div class="col-lg-8">
@@ -104,14 +76,12 @@
                 
                 @endif
 
-{{-- Category Class End --}}
-    @isset($categories)
+                
                 {{-- Sidebar Start --}} 
                 <div class="col-sm-4 col-xs-12">
                     @include('sidebar.sidebar')
                 </div>
                 {{-- Sidebar End --}}
-                @endisset
      
             </div>
         </div>

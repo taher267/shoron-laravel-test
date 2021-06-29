@@ -1,1 +1,2 @@
-.all_newses .date span:last-child {display: none;}
+.all_newses .date span:last-child, .last_child_hide span:last-child {display: none;}
+.child_hide_3 span:nth-child(3) {display: none;}
