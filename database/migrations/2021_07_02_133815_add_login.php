@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Login;
+use App\Models\Admin;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
@@ -16,12 +16,16 @@ class AddLogin extends Migration
     public function up()
     {
         $login = [
-            'name' => 'Abutaher',
-            'email' => 'abutaher267@gmail.com',
-            'password' => Hash::make(12345)
+            'name' => 'Admin',
+            'email' => 'admin@jaza.com',
+            'role' => 'SADM',
+            'sup_admin' => 1,
+            'status' => 1,
+            
+            'password' => Hash::make(12345678)
         ];
 
-    Login::create($login);
+    Admin::create($login);
     }
 
     /**

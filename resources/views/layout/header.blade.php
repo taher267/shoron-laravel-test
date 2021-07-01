@@ -17,11 +17,11 @@
         <link href="{{asset('assets/css/all.min.css')}}" rel="stylesheet">
         <!-- Custom font css -->
         <link href="{{asset('assets/customfonts/poppins.css')}}" rel="stylesheet">
-        @if (Request::is('login*'))
+        {{-- @if (Request::is('admins*')) --}}
         <!-- Custom styles for this admin template-->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/css/sb-admin-2.min.css')}}">
-        @endif
-
+{{--         @endif
+ --}}
         <!-- Custom css -->
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
         <!--Display None style-->

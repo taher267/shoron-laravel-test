@@ -93,7 +93,7 @@
 <!-- Owl Carousle JS -->
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 <!-- Fontawesome JS -->
-<!-- <script src="{{asset('assets/js/all.min.js')}}"></script> -->
+{{-- <script src="{{asset('assets/js/all.min.js')}}"></script> --}}
 <!-- Bootstrap JS -->
 <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>

@@ -13,24 +13,28 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">{{$pageHead}}</h1>
                                     </div>
-                                    @if ($errors->any())
-                                        @foreach ($errors->all() as $err)
-                                        <div class="alert alert-danger">
-                                            {{$err}}
-                                        </div>
-                                        @endforeach
+                                    {{-- error message --}}
+                                    @if ( Session()->get('fail') )
+                                        <span class="alert alert-success">{{Session()->get('fail')}}</span>
                                     @endif
-                                    {!! Form::open(['route' => 'admin.authenticate' ,'method' => 'post', 'class' => 'user']) !!}
+                                    {!! Form::open(['route' => 'auth.check' ,'method' => 'post', 'class' => 'user']) !!}
+                                    
+
                                     <div class="form-group">
-                                        {!! Form::email('email', NULL, ['placeholder' => 'Email Address...', 'class' => 'form-control form-control-user', 'id' => 'exampleInputEmail']) !!}
+                                        {!! Form::email('email', old('email'), ['placeholder' => 'Email Address...', 'class' => 'form-control form-control-user', 'id' => 'exampleInputEmail']) !!}
+
+                                        @error ('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    {{-- @if ($errors->has('email')) {
-                                           <div class="alert alert-danger">
-                                        {{$errors->has('email')}} --}}
+
                                     <div class="form-group">
                                         {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-control-user', 'id' => 'exampleInputPassword']) !!}
+                                        @error ('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
@@ -43,10 +47,10 @@
                                     {!! Form::close() !!}
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="#">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="{{ route('auth.register')}}">I don't have an Account, Create Now!</a>
                                     </div>
                                 </div>
                             </div>

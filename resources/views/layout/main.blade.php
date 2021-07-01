@@ -1,6 +1,6 @@
 @include('layout.header')
 <body>
-<header id="header" class="fixed-top {{request()->is('login*') ? 'nav_bg_custom' : ''}}" >
+<header id="header" class="fixed-top {{request()->is('auth*') ? 'nav_bg_custom' : ''}}" >
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
@@ -39,8 +39,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link {{ request()->is('contact-form*') ? 'active' : ''}}" href="{{route('contact.form')}}">Contact Us</a>
                                     </li>
+                                
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('login*') ? 'active' : ''}}" href="{{route('admin.login')}}">Login</a>
+                                        <a class="nav-link {{ request()->is('auth*') ? 'active' : ''}}" href="{{route('auth.login')}}">Login</a>
                                     </li>
                                 </ul>
                                 <!--  <form class="d-flex">

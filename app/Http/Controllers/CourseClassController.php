@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Category;
 use App\Models\ClassTime;
 use App\Models\CourseClass;
 use App\Models\OurAddress;
 use App\Models\Trainer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class CourseClassController extends Controller
 {
@@ -25,8 +27,9 @@ class CourseClassController extends Controller
     public function index()
     {
         $pageHead = 'All Classes';
+        $auth = Admin::where('id', '=', session('loggedUser'))->first();
         $classes= CourseClass::all()->sortByDesc('id');
-        return view('admin.class.class_list', compact('classes', 'pageHead'));
+        return view('admin.class.class_list', compact('classes', 'pageHead', 'auth'));
     }
 
     /**
