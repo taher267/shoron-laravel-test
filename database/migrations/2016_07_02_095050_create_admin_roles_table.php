@@ -1,12 +1,10 @@
 <?php
 
-use App\Models\Admin;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-class AddLogin extends Migration
+class CreateAdminRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +13,11 @@ class AddLogin extends Migration
      */
     public function up()
     {
-        $login = [
-            'email' => 'admin@jaza.com',
-            'role' => 1,
-            'sup_admin' => 1,
-            'status' => 1,            
-            'password' => Hash::make(12345678)
-        ];
-
-    Admin::create($login);
+        Schema::create('admin_roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('role');
+            // $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +27,6 @@ class AddLogin extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('admin_roles');
     }
 }

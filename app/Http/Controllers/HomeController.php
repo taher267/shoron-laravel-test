@@ -11,6 +11,7 @@ use App\Models\News;
 use App\Models\OurAddress;
 use App\Models\Schedule;
 use App\Models\Trainer;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,11 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {   
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['expart_trainers']= Trainer::where('type', '=', '1')->get();
         $this->data['buildings'] = Building::all();
         $this->data['courses'] = CourseClass::all();
         $this->data['galleries'] = Gallery::all();
-        $this->data['latestNews'] = News::orderBy('id', 'desc')->take(3)->get();
+        $this->data['latestNews'] = News::orderBy('id', 'desc')->where('status', '=', 1)->take(3)->get();
         $this->data['uniqueDatas'] = Home::uniqueArrForGallary();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         // $this->data['test'] = Schedule::arrForClassDay();

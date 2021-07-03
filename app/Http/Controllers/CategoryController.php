@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -19,8 +20,9 @@ class CategoryController extends Controller
     public function index()
     {
         $pageHead= "Category List";
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
         $categories= Category::all();
-        return view('admin.category.category', compact('pageHead', 'categories'));
+        return view('admin.category.category', compact('pageHead', 'authUser', 'categories'));
     }
 
     /**
@@ -31,7 +33,8 @@ class CategoryController extends Controller
     public function create()
     {   
         $pageHead= "Category Add";
-        return view('admin.category.category_create', compact('pageHead'));
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        return view('admin.category.category_create', compact('pageHead', 'authUser'));
     }
 
     /**
@@ -97,9 +100,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   $pageHead= "Update Category";
+    {   $pageHead= "Edit Category";
         $category = Category::findOrFail($id);
-        return view('admin.category.category_edit', compact('category', 'pageHead'));
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        return view('admin.category.category_edit', compact('category', 'pageHead', 'authUser'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\ClassDay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,6 +17,7 @@ class ClassDayController extends Controller
     public function index()
     {
         $this->data['days'] = ClassDay::all();
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
         return view('admin.day.day', $this->data);
     }
 
@@ -26,7 +28,9 @@ class ClassDayController extends Controller
      */
     public function create()
     {
-        return view('admin.day.create');
+		$pageHead = 'New Day';
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        return view('admin.day.create', compact('pageHead','authUser'));
     }
 
     /**

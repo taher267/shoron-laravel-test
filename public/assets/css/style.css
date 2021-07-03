@@ -47,6 +47,7 @@ span{display: inline-block;}
 .h_100{
     height: 100px;
 }
+.text-normal{text-transform: none;}
 /*
 ==================================
     Header CSS
@@ -802,6 +803,26 @@ ul.tags-list li a:hover {
   content: '|';
   margin-right: 0.4em;
 }
+/*****************
+ Dashboard news list
+ *******************/
+.active_btn {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.active_btn:hover {
+    background: #0d6efd;
+}
+
+.pandding_btn {
+    color: #b02a37;
+    border-color: #b02a37;
+}
+
+.pandding_btn:hover {
+    background: #b02a37;
+}
 
 
 /*About Page===============================*/
@@ -1137,4 +1158,34 @@ ul.tabs li.active span {
 }
 #header.nav_bg_custom li.nav-item > a.nav-link.active{
     color: #fb9221 !important;
+}
+
+/** 
+===============
+Login form eye
+==============
+**/
+span#eye-addon {
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    background: transparent;
+    border-left: 0;
+    padding-right: 19px;
+}
+
+input#logInPassword {
+    border-right: 0 !important;
+}
+input-group span#eye-addon:focus {
+    z-index: 3;
+}
+.input-group span#eye-addon:focus {
+    color: #6e707e;
+    background-color: #fff;
+    border-color: #bac8f3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(78 115 223 / 25%);
+}
+i#togglePassword {
+    font-size: 22px;
 }

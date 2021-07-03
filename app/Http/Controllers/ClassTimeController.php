@@ -7,6 +7,7 @@ use App\Models\CourseClass;
 use App\Models\ClassDay;
 use App\Models\ClassTime;
 use App\Models\Trainer;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -20,6 +21,7 @@ class ClassTimeController extends Controller
      */
     public function index()
     {
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();;
         $this->data['days'] = ClassDay::arrDayForSchedule();
         $this->data['pageHead'] = 'Class Time';
         $this->data['schedule'] = ClassTime::all();
@@ -35,6 +37,7 @@ class ClassTimeController extends Controller
     public function create()
     {
         $this->data['pageHead'] = 'Class Time Add ';
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['classes'] = CourseClass::arrClassForSchedule();
         $this->data['trainers'] = Trainer::arrTrainersForSchedule();
         $this->data['days'] = ClassDay::arrDayForSchedule();

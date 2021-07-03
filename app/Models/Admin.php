@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'password','role', 'status', 'email_verified_at', 'approved_by', 'sup_admin'];
+    protected $fillable = ['name', 'email', 'password','role', 'status', 'email_verified_at', 'approved_by', 'sup_admin', 'image'];
 
        /**
      * The attributes that should be hidden for arrays.
@@ -18,7 +18,7 @@ class Admin extends Model
     protected $hidden = [
         'password',
         'remember_token',
-        'sup_admin',
+        // 'sup_admin',
     ];
 
     /**

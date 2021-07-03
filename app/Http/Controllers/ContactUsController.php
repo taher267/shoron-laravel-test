@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactUsRequest;
+use App\Models\Admin;
 use App\Models\ContactUs;
 use App\Models\OurAddress;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 use Mail;
 
@@ -23,6 +24,7 @@ class ContactUsController extends Controller
     public function index()
     {
         $this->data['pageHead'] = 'Contact Address';
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['addresses'] = ContactUs::all();
        return view('admin.contact.contact', $this->data);
     }
@@ -35,8 +37,11 @@ class ContactUsController extends Controller
     public function create()
     {
         // return $address = ContactUs::all()->count(); exit();
+		$this->data['pageHead'] = 'Contact Add';
+		$this->data['authUser']  = Admin::where('id', '=', session('loggedUser'))->first();
+		
         if (ContactUs::all()->count() < 2) {
-            $this->data['pageHead'] = 'Contact Add';
+            
         return view('admin.contact.create', $this->data);
         }else{
             Session()->flash('msg', 'Address Can not add newly, Can update or Delete');

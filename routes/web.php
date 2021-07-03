@@ -17,21 +17,14 @@ use App\Models\OurAddress;
 use Illuminate\Support\Facades\Route;
 
 //Login route
-Route::get('auth/login', [AdminController::class, 'login'])->name('auth.login');
+
 Route::post('auth/login', [AdminController::class, 'check'])->name('auth.check');
-Route::get('auth/register', [AdminController::class, 'register'])->name('auth.register');
+
 Route::post('auth/register', [AdminController::class, 'save'])->name('auth.save');
 
 
-// Route::get('schedule', function() {
-   
-// 	$this->data['ouraddress'] = OurAddress::findOrFail(1);
-//     $this->data['days'] = ClassDay::all();
-//    return view('schedule', $this->data);
-// })->name('schedule');
 
-//schedule Resource
-Route::resource('/schedule', ScheduleController::class);
+
 
 
 Route::get('/about', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about');
@@ -50,10 +43,12 @@ Route::get('/class/{caregory}/{slug}', [CourseClassController::class, 'categoryc
 //////////////////////////////////////////////////////////////
 
 //Auth Middleware
-Route::middleware('auth.midware')->group(function() {
-    Route::get('/dashboard', function() {
-    return view('admin.day.day');
-})->name('dashboard');
+Route::group(['middleware' => ['auth.midware']], function() {
+
+    Route::get('auth/login', [AdminController::class, 'login'])->name('auth.login');
+    Route::get('auth/register', [AdminController::class, 'register'])->name('auth.register');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
     //Trainers Resource for Admin/Dashboard
     Route::resource('/dashboard/trainer', TrainerController::class);
     //Dashboard or Admin
@@ -65,7 +60,7 @@ Route::middleware('auth.midware')->group(function() {
     //contact or contact us Resource
     Route::resource('/dashboard/contact', ContactUsController::class);
 
-    Route::get('/auth/logout', [AdminController::class, 'logout'])->name('/auth.logout');
+    Route::get('/auth/logout', [AdminController::class, 'logout'])->name('auth.logout');
     // Class day resource
     Route::resource('/dashboard/schedule/day', ClassDayController::class);
     //Class Time resourece
@@ -78,13 +73,19 @@ Route::middleware('auth.midware')->group(function() {
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
     // News edit for admin dashboard
     Route::get('/news/edit/{slug}', [NewsController::class, 'edit'])->name('news.edit');
+    //News update
     Route::put('/news/update/{slug}', [NewsController::class, 'update'])->name('news.update');
+
+    //News update
+    Route::put('/news/statusupdate/{id}', [NewsController::class, 'statusupdate'])->name('news.update.status');
+    
     //News delete for admin/Dashboard
     Route::delete('/news/destroy/{slug}', [NewsController::class, 'destroy'] )->name('news.destroy');
 
     //Admin or User Resource Controller
     Route::resource('/dashboard/user', AdminController::class);
-
+    //schedule Resource
+    Route::resource('/schedule', ScheduleController::class);
 
 
 });

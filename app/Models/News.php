@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'slug', 'cat_id', 'image','date'];
+    protected $fillable = ['title', 'description', 'slug', 'cat_id', 'posted_by', 'approved_by', 'image','date'];
     
 
     public function Category()
     {
         return $this->hasMany(Category::class)->withTimestamps();
+
     }
 
     public function newscategory()

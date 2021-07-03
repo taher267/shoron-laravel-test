@@ -17,11 +17,18 @@
         <link href="{{asset('assets/css/all.min.css')}}" rel="stylesheet">
         <!-- Custom font css -->
         <link href="{{asset('assets/customfonts/poppins.css')}}" rel="stylesheet">
-        {{-- @if (Request::is('admins*')) --}}
+        @if (Request::is('auth*'))
         <!-- Custom styles for this admin template-->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/css/sb-admin-2.min.css')}}">
-{{--         @endif
- --}}
+        @endif
+
+        @if (Request::is('auth/login'))
+        <!-- Custom styles for this admin template-->
+        {{-- Bootstrap icon css --}}
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-icons.css')}}"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        @endif
+
         <!-- Custom css -->
         <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
         <!--Display None style-->

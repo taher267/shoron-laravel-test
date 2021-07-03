@@ -1,12 +1,10 @@
 <?php
 
-use App\Models\Admin;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-class AddLogin extends Migration
+class AddColumnNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +13,12 @@ class AddLogin extends Migration
      */
     public function up()
     {
-        $login = [
-            'email' => 'admin@jaza.com',
-            'role' => 1,
-            'sup_admin' => 1,
-            'status' => 1,            
-            'password' => Hash::make(12345678)
-        ];
-
-    Admin::create($login);
+        if (! Schema::hasColumn('table', 'column')) {
+            Schema::table('news', function( $table) {
+            $table->foreignId('posted_by')->after('cat_id');
+        });
+        }
+        
     }
 
     /**

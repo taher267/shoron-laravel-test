@@ -13,6 +13,7 @@
 </div>
 <!--Banner End -->
 <!-- pure javascript -->
+
 <!-- Start building -->
 <div class="building" style="background:url({{asset('assets/images/building_bg.png')}});">
     <div class="container">
@@ -44,7 +45,7 @@
                 @foreach($courses as $course)
                     <div class="col-lg-12 feature_box">
                         <div class="feature">
-                            <img src="{{asset($course->image)}}">
+                            <img src="{{asset('storage/assets/class/' . $course->image)}}">
                             <div class="time_box">
                                 <span class="date"><span>16 dec</span></span>
                                 <span class="time"><span>6:30 am</span></span>
@@ -121,7 +122,7 @@
                         <div class="col-lg-4 col-sm-12">
                     <div class="news_box">
                         <div class="featured">
-                            <img src="{{asset(
+                            <img class="mw-100 h-300" src="{{asset('storage/assets/news/'.
                                 $latest->image)}}" alt="">
                             <div class="date">
                                 <span>JAN</span>
@@ -129,7 +130,7 @@
                             </div>
                         </div>
                         <h4>{{$latest->title}}</h4>
-                        <p>{{$latest->description}} <a href="{{url('news/details'. '/'. $latest->id)}}">Read More...</a></p>
+                        <p>{{$latest->description}} <a href="{{ route('news.show',[$latest->slug]) }}">Read More...</a></p>
                     </div>
                 </div>
                     @endforeach

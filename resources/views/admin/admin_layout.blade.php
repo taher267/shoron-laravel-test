@@ -21,7 +21,8 @@
     <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     {{-- Custom css --}}
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-
+    {{-- Bootstrap icon css --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-icons.css')}}">
 </head>
 
 <body id="page-top">
@@ -98,8 +99,9 @@
                 </a>
                 <div id="collapseNews" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ request()->is('news/table') ? 'active' : ''}}" href="{{route('news.list')}}">News List</a>
+                        <a class="collapse-item {{ request()->is('news/table') ? 'active' : ''}}" href="{{route('news.list')}}">All News</a>
                         <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">New News</a>
+                        <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">Pandding News</a>
                     </div>
                 </div>
             </li>
@@ -152,7 +154,26 @@
                     </div>
                 </div>
             </li>
-            {{-- Contact End --}}
+            {{-- Trainer End --}}
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+             {{-- User Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('user*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
+                    <i class="fa fa-cubes"></i>
+                    <span>Users</span>
+                </a>
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a title="For user Page" class="collapse-item {{ request()->is('user*') ? 'active' : ''}}" href="{{route('user.index')}}">All User</a>
+
+                        <a class="collapse-item " href="{{route('user.create')}}">New User</a>
+                    </div>
+                </div>
+            </li>
+            {{-- User End --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -343,7 +364,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@isset($authUser->name){{$authUser->name}}@endisset</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{asset('admin/img/undraw_profile.svg')}}">
                             </a>

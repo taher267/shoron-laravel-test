@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsRequest;
 use App\Models\Category;
+use App\Models\Admin;
 use App\Models\News;
 use App\Models\OurAddress;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +26,7 @@ class NewsController extends Controller
      */
     public function index()
     {
+        $this->data['authUser']  = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $this->data['newses'] = News::all();
         $this->data['news_categories'] = Category::all();
@@ -37,6 +40,7 @@ class NewsController extends Controller
      */
     public function create()
     {
+        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['headeing']='News page';
         $this->data['categories']=Category::categoriesListArr();
         return view('admin.news.news_create', $this->data);
@@ -143,7 +147,8 @@ class NewsController extends Controller
      */
     public function categorynews($category)
     {
-
+		
+        $this->data['authUser']  = Admin::where('id', '=', session('loggedUser'))->first();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $category_id                 = Category::where('slug', $category)->get();
         $this->data['cateNews']   = News::where('cat_id', '=', $category_id[0]->id)->where('status', '=', '1')
@@ -184,13 +189,41 @@ class NewsController extends Controller
     public function newslist()
     {
         
-        $this->data['pageHead'] = 'News List';
+        $this->data['pageHead'] = 'All News';
         $this->data['newslist'] = News::all();
 
         // $this->data['categories'] = Category::all();
 
         return view('admin.news.news_list', $this->data);
     }
+    
+    /**
+     *Display Pandding News Update OR News Status update for dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statusupdate(Request $request, $id)
+    {
+        //check Authentication
+        if ($this->authUser()->role <=2 && $this->authUser()->status ===1 ) {
+            $this->validate($request, [
+                'status'        => 'required|numeric'
+            ]);
+           $news_status_up = News::findOrFail($id);
+        $news_status_up->approved_by = $this->authUser()->id;
+           $news_status_up->status = $request->status;
+           if ( $news_status_up->save() ) {
+                 return back()->with('status', "News Status Has been Updated!!~~$id");
+             }else{
+              return back()->with('status', "News Status Hasn't been Updated!!");  
+             }
+
+        }else{
+            return back()->with('msg', "You must be admin!"); 
+        }
+
+    }
+
     
 /**
      * Show the form for editing the specified resource.

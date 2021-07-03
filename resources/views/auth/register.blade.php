@@ -37,21 +37,26 @@
                                     </div>
 
                                     <div class="form-group">
-                                        {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-control-user', 'id' => 'exampleInputPassword']) !!}
+                                        {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-control-user', 'id' => 'logPassword']) !!}
                                         
                                         @error('password')<span class="text-danger">{{$message}}</span> @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        {!! Form::password('confirmPass', ['placeholder' => 'Confirm Password', 'class' => 'form-control form-control-user', 'id' => 'exampleInputconfirmPassword']) !!}
+                                        {!! Form::password('confirm_password', ['placeholder' => 'Confirm Password', 'class' => 'form-control form-control-user', 'id' => 'logConfirmPassword','onkeyup' => 'return Validate()']) !!}
+                                        <span id="confirmChackVal"></span>
                                         
-                                        @error('confirmPass')<span class="text-danger">{{$message}}</span> @enderror
+                                        @error('confirm_password')<span class="text-danger">{{$message}}</span> @enderror
                                     </div>
 
                                     {!! Form::submit('Register', ['class' => 'btn btn-primary btn-user btn-block']) !!}
                                     {!! Form::close() !!}
+
+                                
                                     <hr>
-                                    <div class="text-center">
+
+     
+                              <div class="text-center">
                                         <a class="small" href="{{route('auth.login')}}">I Already have an Account | Login!</a>
                                     </div>
                                 </div>

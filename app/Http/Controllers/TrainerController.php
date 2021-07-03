@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\ClassTime;
 use App\Models\OurAddress;
 use App\Models\Trainer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class TrainerController extends Controller
@@ -21,7 +22,8 @@ class TrainerController extends Controller
     {
         $pageHead = 'Trainer List';
         $trainers = Trainer::all()->sortByDesc('id');
-        return view('admin.trainer.trainer_list', compact('pageHead', 'trainers'));
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        return view('admin.trainer.trainer_list', compact('pageHead', 'trainers', 'authUser'));
     }
 
     
@@ -33,8 +35,9 @@ class TrainerController extends Controller
     public function create()
     {
         $pageHead = 'New Trainer';
+		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
         $classtime = ClassTime::classTimesArr();
-        return view('admin.trainer.trainer_create', compact('pageHead','classtime'));
+        return view('admin.trainer.trainer_create', compact('pageHead','classtime', 'authUser'));
     }
 
     /**

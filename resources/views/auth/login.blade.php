@@ -30,8 +30,12 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-control-user', 'id' => 'exampleInputPassword']) !!}
+                                    <div class="input-group">
+                                        {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-control-user', 'id' => 'logInPassword', ]) !!}
+                                        <span class="input-group-text" id="eye-addon" onclick='return Passshow()'><i class="bi bi-eye-slash" id="togglePassword"></i></span>
+                                        
+
+                                        
                                         @error ('password')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -46,6 +50,8 @@
                                     {!! Form::submit('Login', ['class' => 'btn btn-primary btn-user btn-block']) !!}
                                     {!! Form::close() !!}
                                     <hr>
+                                    <script type="text/javascript">
+                                    </script>
                                     <div class="text-center">
                                         <a class="small" href="#">Forgot Password?</a>
                                     </div>
@@ -62,3 +68,4 @@
     </div>
 </div>
 @stop
+

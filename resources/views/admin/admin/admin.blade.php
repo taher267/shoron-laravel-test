@@ -30,22 +30,27 @@
     </div>
     @endif</h6>
         </div>
+        
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead class="text-center">
                         <tr>
-                            <th>user</th>
+                            <th>Name</th>
                             <th>Feature</th>
-                            <th>Slug</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot class="text-center">
                     <tr>
-                        <th>user</th>
+                        <th>Name</th>
                         <th>Feature</th>
-                        <th>Slug</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -53,14 +58,18 @@
                         @isset ( $users )
                         @foreach ($users as $user)
                         <tr class="text-center text-capitalize">
-                            <td>{{ $user->user }}</td>
+                            <td>{{ $user->name }}</td>
                             <td><img class="w-50 h_100" src="{{asset('storage/assets/user/'. $user->image)}}" alt="user Feature"></td>
-                            <td>{{$user->slug}}</td>
+                            <td class="text-normal">{{$user->email}}</td>
+                            <td>{{$user->role}}</td>
+                            <td>{{$user->status}}</td>
                             <td>
-                                <a class="btn px-3" href="{{route('user.edit', $user->id)}}"><i class="fa fa-edit"></i> Edit</a>
+                                <a class="btn px-3" title="{{$authUser->role}}" onclick="return {{($authUser->role==1 || $authUser->role=='2')? 'true' : 'false'}}" href="{{route('user.edit', $user->id)}}"><i class="fa fa-edit"></i> Edit</a>
                                 {{-- Delete user --}}
                                 {!! Form::open(['route' => ['user.destroy', $user->id], 'method' => 'delete']) !!}
-                                <button title="{{$user->user }}" class="btn-danger btn" onclick="return confirm('Are you Sure to delete {{$user->user}}?')" type="submit"><i class="fa fa-trash"></i> Delt</button>
+                                <button title="{{( $authUser->id == $user->id || $user->sup_admin==1 || $authUser->role > $user->role )? 'disabled' : ''}}"
+                                    
+                                 {{( $authUser->id == $user->id || $user->sup_admin==1 || $authUser->role > $user->role )? 'disabled' : ''}}  class="btn-danger btn" onclick="return confirm('Are you Sure to delete the account of {{$user->name}}?')" type="submit"><i class="fa fa-trash"></i> Delet</button>
                                 {!! Form::close() !!}
                             </td>
                         </tr>
@@ -74,3 +83,6 @@
     </div>
 </div>
 @stop
+
+
+{{-- title=" {{( $authUser->role == 1 && $authUser->id != $user->id)? '' : 'You can only update info!'}}" {{( $authUser->role == 1 && $authUser->id != $user->id)? '' : 'disabled'}} --}}

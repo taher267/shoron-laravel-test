@@ -15,11 +15,11 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image')->default('avater.png');
-            $table->string('role')->default('SUBS');
+            $table->integer('role',3)->default(6);// subscriber
             $table->boolean('status')->default(0);
             $table->boolean('sup_admin')->default(0);
             $table->foreignId('approved_by')->nullable();
