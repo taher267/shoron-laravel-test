@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\ContactUs;
 use App\Models\CourseClass;
+use App\Models\News;
+use App\Models\OurAddress;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -14,10 +17,23 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     protected $data = [];
 
-//
+//Authentication
    protected static function authUser()
     {
         return Admin::where('id', '=', session('loggedUser'))->first();
+    }
+
+//Authentication
+   public static function asUsualData()
+    {
+        $alldata =[
+            'authUser' => Admin::where('id', '=', session('loggedUser'))->first(),
+            'contactTable' => ContactUs::all(),
+            'ouraddress' => OurAddress::all(),
+            'newses' => News::all(),
+        ];
+        return $alldata;
+        //blade print $[authUser]
     }
 
     function get_file_extension($file_name, $slizer = '-') {

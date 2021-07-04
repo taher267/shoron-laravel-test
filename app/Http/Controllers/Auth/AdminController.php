@@ -36,9 +36,10 @@ class AdminController extends Controller
      */
     public function dashboard(){
         $pageHead = 'Dashboard';
+        $asUsualData = $this->asUsualData();
         $authUser = Admin::where('id', '=', session('loggedUser'))->first();
         $ouraddress = OurAddress::findOrFail(1);
-        return view( 'admin.day.day',compact('pageHead', 'ouraddress', 'authUser') );
+        return view( 'admin.day.day',compact('pageHead', 'ouraddress', 'authUser', 'asUsualData') );
     }
 
     /**

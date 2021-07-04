@@ -26,11 +26,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $this->data['authUser']  = Admin::where('id', '=', session('loggedUser'))->first();
+        $asUsualData = $this->asUsualData();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $this->data['newses'] = News::all();
         $this->data['news_categories'] = Category::all();
-        return view('news.news', $this->data);
+        return view('news.news', $this->data, compact('asUsualData'));
     }
 
     /**
@@ -54,6 +54,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        //check Authentication
+        if ($this->authUser()->role <=4 && $this->authUser()->status ===1 ) {
+            //input validation
+
         $this->validate($request, [
             'title'         => 'required|',
             'description'   => 'string|nullable',
@@ -116,6 +120,9 @@ class NewsController extends Controller
 
          Session()->flash('msg', "News Has been added!!");
          return redirect()->route('news.create');
+         }else{
+            return back()->with('msg', "You must be admin!"); 
+        }
 
     }
 
@@ -206,6 +213,7 @@ class NewsController extends Controller
     {
         //check Authentication
         if ($this->authUser()->role <=2 && $this->authUser()->status ===1 ) {
+            //input validation
             $this->validate($request, [
                 'status'        => 'required|numeric'
             ]);
@@ -249,6 +257,9 @@ class NewsController extends Controller
      */
     public function update(Request $request, $slug)
     {
+         //check Authentication
+        if ($this->authUser()->role <=2 && $this->authUser()->status ===1 ) {
+            //input validation
         $this->validate($request, [
             'title'         => 'required|',
             'description'   => 'string|nullable',
@@ -304,6 +315,9 @@ class NewsController extends Controller
              Session()->flash('msg', "News Has been Updated!!");
              return redirect()->route('news.edit', $rand_slug);
              }
+        }else{
+            return back()->with('msg', "You must be admin!"); 
+        }
         
     }
 

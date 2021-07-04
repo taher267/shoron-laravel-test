@@ -101,7 +101,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item {{ request()->is('news/table') ? 'active' : ''}}" href="{{route('news.list')}}">All News</a>
                         <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">New News</a>
-                        <a class="collapse-item {{ request()->is('news/create') ? 'active' : ''}}" href="{{route('news.create')}}">Pandding News</a>
                     </div>
                 </div>
             </li>
