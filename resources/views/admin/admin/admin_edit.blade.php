@@ -36,11 +36,11 @@
                 {!! Form::select('role',$roles, NULL, ['class' => 'form-control text-capitalize', 'placeholder' => 'Select Option']) !!}
             </div>
 
-            <div class="input-group mb-3">
+            {{-- <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-arrow-up text-primary"></i></span>
                 {!! Form::select('status', ['0'=> 'deactive','1'=> 'active'], NULL, ['class' => 'form-control text-capitalize', 'placeholder' => 'Change Status']) !!}
-            </div>
-            {{-- <img class="w-50" src="{{asset('storage/assets/user/'. $user->image)}}" alt="Missing user Image"> --}}
+            </div> --}}
+            <img class="w-50" src="{{asset('storage/assets/user/'. $user->image)}}" alt="Missing user Image">
 
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-image text-primary"></i></span>

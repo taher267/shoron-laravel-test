@@ -24,6 +24,7 @@ class ClassTimeController extends Controller
         $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();;
         $this->data['days'] = ClassDay::arrDayForSchedule();
         $this->data['pageHead'] = 'Class Time';
+        $this->data['asUsualData'] =$this->asUsualData();
         $this->data['schedule'] = ClassTime::all();
         return view('admin.time.time', $this->data);
 

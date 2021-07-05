@@ -97,7 +97,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-12 mb-4 element-item {{$gallery->course}}">
                     <div class="gallery_box">
                         <img class="featured" src="{{asset($gallery->course_image)}}" alt="">
-                        <a href="{{$gallery->id}}" class="gallery_overlay">
+                        <a class="light_img" href="{{asset($gallery->course_image)}}" class="gallery_overlay">
                             <i class="fa fa-search-plus"></i>
                         </a>
                     </div>

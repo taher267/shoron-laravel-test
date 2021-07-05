@@ -1189,3 +1189,13 @@ input-group span#eye-addon:focus {
 i#togglePassword {
     font-size: 22px;
 }
+
+/***********
+ * dashboard pandding number
+ * **********/
+.alert_panding_number {
+    background: #fff;
+    color: #2F56C8;
+    padding: 5px;
+    border-radius: 50%;
+}

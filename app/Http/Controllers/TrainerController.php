@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+// use App\Models\Admin;
 use App\Models\ClassTime;
 use App\Models\OurAddress;
 use App\Models\Trainer;
@@ -14,16 +14,23 @@ use Intervention\Image\Facades\Image;
 class TrainerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of Traiiners.
      *
      * @return \Illuminate\Http\Response
+     * 
+     *  $this->permission(4) from controller.php
      */
     public function index()
     {
-        $pageHead = 'Trainer List';
-        $trainers = Trainer::all()->sortByDesc('id');
-		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
-        return view('admin.trainer.trainer_list', compact('pageHead', 'trainers', 'authUser'));
+        $this->data['pageHead'] = 'Trainer List';
+
+        if ( $this->permission(4) ) {
+            $this->data['trainers'] = Trainer::all()->sortByDesc('id');
+        $this->data['asUsualData'] = $this->asUsualData();
+         return view('admin.trainer.trainer_list', $this->data);
+        }else{
+           return view('admin.trainer.trainer_list', $this->data);}
+         
     }
 
     
@@ -31,13 +38,19 @@ class TrainerController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * $this->permission() from controller.php return 2 params role and status default assign 2 and 1
      */
     public function create()
     {
         $pageHead = 'New Trainer';
-		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
-        $classtime = ClassTime::classTimesArr();
-        return view('admin.trainer.trainer_create', compact('pageHead','classtime', 'authUser'));
+        //check Authentication
+        if ($this->permission() ) {
+    		$authUser = Admin::where('id', '=', session('loggedUser'))->first();
+            $classtime = ClassTime::classTimesArr();
+            $asUsualData = $this->asUsualData();
+            return view('admin.trainer.trainer_create', compact('pageHead','classtime', 'authUser', 'asUsualData'));
+        }
     }
 
     /**
@@ -107,8 +120,9 @@ class TrainerController extends Controller
     {
         $trainer = Trainer::findOrFail($id);
         $pageHead = 'Edit Trainer';
+        $asUsualData = $this->asUsualData();
         $classtime = ClassTime::classTimesArr();
-        return view('admin.trainer.trainer_edit', compact('pageHead','classtime', 'trainer'));
+        return view('admin.trainer.trainer_edit', compact('pageHead','classtime', 'trainer', 'asUsualData'));
     }
 
     /**
@@ -117,9 +131,15 @@ class TrainerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * $this->permission() from controller.php 
+     * @param int $role, $status default value assigned
+     * 
      */
     public function update(Request $request, $id)
     {
+        //check Authentication
+        if ($this->permission() ) {
+            //input validation
         $this->validate($request, [
             'name' => 'required|string',
             'trainer_image' => 'nullable|image|mimes:jpg,jpeg,png|max:400',
@@ -158,6 +178,9 @@ class TrainerController extends Controller
             Session()->flash('msg', 'Trainer has been updated!');
             return redirect()->route('trainer.index');
         }
+    }else{
+        return back()->with('msg', "You must be admin!"); 
+    }
 
 
     }
@@ -167,20 +190,28 @@ class TrainerController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * * $this->permission() from controller.php 
+     * @param int $role, $status default value assigned
      */
     public function destroy($id)
     {
-        $del_trainer= Trainer::findOrFail($id);
 
-        //Image delete if exist
-        if (Storage::disk('public')->exists('assets/trainer/' . $del_trainer->trainer_image) && 'default.png' != $del_trainer->trainer_image) {
-            Storage::disk('public')->delete('assets/trainer/' . $del_trainer->trainer_image);
-        }
-        
-        //delete trainer & confirmation
-        if ($del_trainer->delete()) {
-            Session()->flash('msg', 'Trainer has been deleted!!!');
-            return redirect()->back();
+        //check Authentication
+        if ($this->permission() ) {
+            $del_trainer= Trainer::findOrFail($id);
+
+            //Image delete if exist
+            if (Storage::disk('public')->exists('assets/trainer/' . $del_trainer->trainer_image) && 'default.png' != $del_trainer->trainer_image) {
+                Storage::disk('public')->delete('assets/trainer/' . $del_trainer->trainer_image);
+            }
+            
+            //delete trainer & confirmation
+            if ($del_trainer->delete()) {
+                Session()->flash('msg', 'Trainer has been deleted!!!');
+                return redirect()->back();
+            }
+        }else{
+            return back()->with('msg', "You must be Admin!!");
         }
     }
 

@@ -20,17 +20,32 @@
         
     </div>
     
-    
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">@if(session('msg'))
-    <div class="alert alert-primary">
-        {{session('msg')}}
-    </div>
-    @endif</h6>
+            <div class="alert alert-primary">
+                {{session('msg')}}
+            </div>
+            @endif
+            </h6>
         </div>
-        
+        {{-- <select id="ddlViewBy">
+            <option value="1">test1</option>
+            <option value="2" selected="selected">test2</option>
+            <option value="3">test3</option>
+        </select>
+
+        <script>
+        var e = document.getElementById("ddlViewBy");
+        function show(){
+        var as = document.forms[0].ddlViewBy.value;
+        var strUser = e.options[e.selectedIndex].value;
+        console.log(as, strUser);
+        }
+        e.onchange=show;
+        show();
+        </script> --}}
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
@@ -55,21 +70,42 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                        @isset ( $users )
-                        @foreach ($users as $user)
+                        @isset ( $asUsualData['alluser'] )
+                        @foreach ($asUsualData['alluser'] as $user)
                         <tr class="text-center text-capitalize">
                             <td>{{ $user->name }}</td>
-                            <td><img class="w-50 h_100" src="{{asset('storage/assets/user/'. $user->image)}}" alt="user Feature"></td>
+                            <td><img class="w-50 h_100" src="{{asset(($user->image)?'storage/assets/user/'. $user->image:'storage/assets/user/avater.svg')}}" alt="user Feature"></td>
                             <td class="text-normal">{{$user->email}}</td>
-                            <td>{{$user->role}}</td>
-                            <td>{{$user->status}}</td>
+                            <td>
+                                {!! Form::model($user, ['route'=> ['user.update.status', $user->id], 'method'=> 'put']) !!}
+                                {!! Form::select('role', $roles, null, ['class'=> 'text-capitalize form-control', 'id'=> 'users_role']) !!}
+                                {!! Form::submit('Change Role', ['class'=>'form-control btn btn-primary mt-2']) !!}
+                                {!! Form::close() !!}
+                            </td>
+                            
+                            <td>
+                                {!! Form::model($user, ['route'=> ['user.update.status', $user->id], 'method'=> 'put']) !!}
+                                <button id="user_status_btn" onclick='return confirm("{{($user->status == 1)? 'Do you want to deactive the user?': 'Do you want to active the user?'}}?") '
+                                title="{{($user->status == 1)? 'Do you want to deactive the user?': 'Do you want to active the user?'}}" value="{{($user->status == 1)? '0': '1'}}" class="font-weight-bold {{($user->status == 1)? ' btn active_btn': 'btn pandding_btn'}}" type="submit" name="status">{{($user->status == 1)? 'Active': 'Pandding'}}</button>
+                                {!! Form::close() !!}
+                                @if (session('status'))
+                                @php
+                                $var = explode('~~', session('status'));
+                                @endphp
+                                @if ($user->id == end($var))
+                                <span class="alert {{($user->status == 1)? 'alert-success': 'alert-danger'}}">
+                                    {{$var[0]}}
+                                </span>
+                                @endif
+                                @endif
+                            </td>
                             <td>
                                 <a class="btn px-3" title="{{$authUser->role}}" onclick="return {{($authUser->role==1 || $authUser->role=='2')? 'true' : 'false'}}" href="{{route('user.edit', $user->id)}}"><i class="fa fa-edit"></i> Edit</a>
                                 {{-- Delete user --}}
                                 {!! Form::open(['route' => ['user.destroy', $user->id], 'method' => 'delete']) !!}
                                 <button title="{{( $authUser->id == $user->id || $user->sup_admin==1 || $authUser->role > $user->role )? 'disabled' : ''}}"
-                                    
-                                 {{( $authUser->id == $user->id || $user->sup_admin==1 || $authUser->role > $user->role )? 'disabled' : ''}}  class="btn-danger btn" onclick="return confirm('Are you Sure to delete the account of {{$user->name}}?')" type="submit"><i class="fa fa-trash"></i> Delet</button>
+                                
+                                {{( $authUser->id == $user->id || $user->sup_admin==1 || $authUser->role > $user->role )? 'disabled' : ''}}  class="btn-danger btn" onclick="return confirm('Are you Sure to delete the account of {{$user->name}}?')" type="submit"><i class="fa fa-trash"></i> Delet</button>
                                 {!! Form::close() !!}
                             </td>
                         </tr>
@@ -83,6 +119,3 @@
     </div>
 </div>
 @stop
-
-
-{{-- title=" {{( $authUser->role == 1 && $authUser->id != $user->id)? '' : 'You can only update info!'}}" {{( $authUser->role == 1 && $authUser->id != $user->id)? '' : 'disabled'}} --}}

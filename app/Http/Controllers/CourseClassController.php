@@ -27,9 +27,10 @@ class CourseClassController extends Controller
     public function index()
     {
         $pageHead = 'All Classes';
-        $auth = Admin::where('id', '=', session('loggedUser'))->first();
+        // $auth = Admin::where('id', '=', session('loggedUser'))->first();
+        $asUsualData = $this->asUsualData();
         $classes= CourseClass::all()->sortByDesc('id');
-        return view('admin.class.class_list', compact('classes', 'pageHead', 'auth'));
+        return view('admin.class.class_list', compact('classes', 'pageHead', 'asUsualData'));
     }
 
     /**

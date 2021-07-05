@@ -31,11 +31,29 @@ class Controller extends BaseController
             'contactTable' => ContactUs::all(),
             'ouraddress' => OurAddress::all(),
             'newses' => News::all(),
+            'alluser' => Admin::all(),
         ];
         return $alldata;
         //blade print $[authUser]
     }
 
+ /**
+     * crud auth by Role and status
+     * 
+     * int role
+     * 
+     * int status
+     */
+
+    public function permission(int $role = 2, int $status = 1)
+    {
+        if ($this->asUsualData()['authUser']->role <=$role && $this->asUsualData()['authUser']->status ===$status) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+   
     function get_file_extension($file_name, $slizer = '-') {
         $exploded =explode($slizer,$file_name);
         return end($exploded);

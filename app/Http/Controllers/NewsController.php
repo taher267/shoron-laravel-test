@@ -40,9 +40,11 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
-        $this->data['headeing']='News page';
-        $this->data['categories']=Category::categoriesListArr();
+        // $this->data['authUser']     = $this->asUsualData()['authUser'];
+
+        $this->data['headeing']     ='News page';
+        $this->data['asUsualData']  = $this->asUsualData();
+        $this->data['categories']   =Category::categoriesListArr();
         return view('admin.news.news_create', $this->data);
     }
 
@@ -55,7 +57,7 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         //check Authentication
-        if ($this->authUser()->role <=4 && $this->authUser()->status ===1 ) {
+        if ($this->asUsualData()['authUser']->role <=4 && $this->asUsualData()['authUser']->status ===1 ) {
             //input validation
 
         $this->validate($request, [
@@ -200,6 +202,7 @@ class NewsController extends Controller
         $this->data['newslist'] = News::all();
 
         // $this->data['categories'] = Category::all();
+        $this->data['asUsualData'] = $this->asUsualData();
 
         return view('admin.news.news_list', $this->data);
     }
@@ -208,17 +211,19 @@ class NewsController extends Controller
      *Display Pandding News Update OR News Status update for dashboard.
      *
      * @return \Illuminate\Http\Response
+     * this->permission from Controller.php
+     * @param int $role, int $status
      */
     public function statusupdate(Request $request, $id)
     {
         //check Authentication
-        if ($this->authUser()->role <=2 && $this->authUser()->status ===1 ) {
+        if ( $this->permission() ) {
             //input validation
             $this->validate($request, [
                 'status'        => 'required|numeric'
             ]);
            $news_status_up = News::findOrFail($id);
-        $news_status_up->approved_by = $this->authUser()->id;
+        $news_status_up->approved_by = $this->asUsualData()['authUser']->id;
            $news_status_up->status = $request->status;
            if ( $news_status_up->save() ) {
                  return back()->with('status', "News Status Has been Updated!!~~$id");
@@ -258,7 +263,7 @@ class NewsController extends Controller
     public function update(Request $request, $slug)
     {
          //check Authentication
-        if ($this->authUser()->role <=2 && $this->authUser()->status ===1 ) {
+        if ($this->asUsualData()['authUser']->role <=2 && $this->asUsualData()['authUser']->status ===1 ) {
             //input validation
         $this->validate($request, [
             'title'         => 'required|',

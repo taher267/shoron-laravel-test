@@ -95,7 +95,12 @@
                 <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="{{route('news.list')}}" data-toggle="collapse" data-target="#collapseNews"
                     aria-expanded="true" aria-controls="collapseNews">
                     <i class="fa fa-newspaper"></i>
-                    <span>News</span>
+                    <span>News
+                        {{--Pandding user Count  --}}
+                        @if(isset($asUsualData['newses']))
+                        <sup><span title="Panding User" class="alert_panding_number">{{$asUsualData['newses']->where('status', '=', 0)->count()}}</span></sup> 
+                        @endif
+                    </span>
                 </a>
                 <div id="collapseNews" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -163,6 +168,10 @@
                     aria-expanded="true" aria-controls="collapseUsers">
                     <i class="fa fa-cubes"></i>
                     <span>Users</span>
+                     {{--Pandding user Count  --}}
+                     @if(isset($asUsualData['alluser']))
+                    <sup><span title="Panding User" class="alert_panding_number">{{$asUsualData['alluser']->where('status', '=', 0)->count()}}</span></sup>
+                    @endif
                 </a>
                 <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -363,10 +372,11 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@isset($authUser->name){{$authUser->name}}@endisset</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-uppercase">@if(isset($asUsualData['authUser']->name)) {{$asUsualData['authUser']->name}} @endif</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{asset('admin/img/undraw_profile.svg')}}">
+                                    src="{{asset(isset(($asUsualData['authUser']->image))?'storage/assets/user/'. $asUsualData['authUser']->image:'storage/assets/user/avater.svg')}}">
                             </a>
+                            {{-- {{($asUsualData['authUser']->image)?asset('storage/assets/user/'. $asUsualData['authUser']->image) :asset('admin/img/undraw_profile.svg')}} --}}
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">

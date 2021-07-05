@@ -23,9 +23,10 @@ class AdminController extends Controller
     public function login()
     {
         $pageHead = 'Login Here';
+        $this->asUsualData()['authUser'];
         $ouraddress = OurAddress::findOrFail(1);
         
-        return view( 'auth.login',compact('pageHead', 'ouraddress') );
+        return view( 'auth.login', compact('pageHead', 'ouraddress') );
     }
 
 
@@ -37,7 +38,7 @@ class AdminController extends Controller
     public function dashboard(){
         $pageHead = 'Dashboard';
         $asUsualData = $this->asUsualData();
-        $authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        $authUser = $this->asUsualData()['authUser'];
         $ouraddress = OurAddress::findOrFail(1);
         return view( 'admin.day.day',compact('pageHead', 'ouraddress', 'authUser', 'asUsualData') );
     }
@@ -134,10 +135,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $pageHead = 'User List';
-        $authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        $pageHead = 'All User';
+        $asUsualData = $this->asUsualData();
+        $authUser = $this->asUsualData()['authUser'];
+        $roles = AdminRole::rolesArrForUser();
         $users = Admin::all();
-        return view('admin.admin.admin', compact('pageHead', 'users', 'authUser'));
+        return view('admin.admin.admin', compact('pageHead', 'users', 'authUser', 'asUsualData', 'roles'));
     }
 
     /**
@@ -181,10 +184,10 @@ class AdminController extends Controller
     public function edit($id)
     {
         $pageHead= "Edit User";
-        $authUser = Admin::where('id', '=', session('loggedUser'))->first();
+        $asUsualData = $this->asUsualData();
         $roles =AdminRole::rolesArrForUser();
         $user = Admin::findOrFail($id);
-        return view('admin.admin.admin_edit', compact('pageHead', 'user', 'roles', 'authUser'));
+        return view('admin.admin.admin_edit', compact('pageHead', 'user', 'roles','asUsualData'));
     }
 
     /**
@@ -196,64 +199,101 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $authUser = Admin::where('id', '=', session('loggedUser'))->first();
-        
+         
         // check status and role
         $tryingupdate = Admin::findOrFail($id);
-        if ($authUser->status ==1 && ($authUser->sup_admin ==1 || $authUser->role <=2) ) {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'email' => 'required|email',//:unique:admins
-            'role' => 'required|numeric',
-            'status' => 'required|numeric',
-            'image' => 'image|mimes:jpg,jpeg,png|max:1024',
-        ]);
-        
-        $image = $request->file('image');
+        if ($this->asUsualData()['authUser']->status ==1 && ($this->asUsualData()['authUser']->sup_admin ==1 || $this->asUsualData()['authUser']->role <=2) ) {
+            $this->validate($request, [
+                'name' => 'required|string',
+                'email' => 'required|email',//:unique:admins
+                'role' => 'required|numeric',
+                // 'status' => 'required|numeric',
+                'image' => 'image|mimes:jpg,jpeg,png|max:1024',
+            ]);
+            
+            $image = $request->file('image');
 
-        $userInfo = Admin::findOrFail($id);
-        if (isset($image)) {
-            //Make unique name of image
-            $imageName = Str::slug($request->name) . Carbon::now()->toDateString() . uniqid() . '.' . $image->getClientOriginalExtension();
+            $userInfo = Admin::findOrFail($id);
+            if (isset($image)) {
+                //Make unique name of image
+                $imageName = Str::slug($request->name) . Carbon::now()->toDateString() . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            //Old image check and delete
-            if (Storage::disk('public')->exists('assets/user/' . $userInfo->image ) && $userInfo->image != 'avater.png') {
-                Storage::disk('public')->delete('assets/user/' . $userInfo->image);
+                //Old image check and delete
+                if (Storage::disk('public')->exists('assets/user/' . $userInfo->image ) && $userInfo->image != 'avater.png') {
+                    Storage::disk('public')->delete('assets/user/' . $userInfo->image);
+                }
+
+                //Make dir, not exist
+                if (!Storage::disk('public')->exists('assets/user')) {
+                    Storage::disk('public')->makeDirectory('assets/user');
+                }
+
+                //Resize image for Category and upload
+                $resizeImage = Image::make($image)->resize(100,100)->save(90);
+                Storage::disk('public')->put('assets/user/'.$imageName, $resizeImage);
+            }else{
+                $imageName = $userInfo->image;
+            }
+           
+            $userInfo->name         = $request->name;
+            $userInfo->email        = $request->email;
+            $userInfo->status       = $userInfo->status;
+            $userInfo->role         = $request->role;
+            $userInfo->image        = $imageName;
+            $userInfo->sup_admin    = ($tryingupdate->role ==1 && $tryingupdate->sup_admin==1)? '1':'0';
+            $userInfo->approved_by  = $this->asUsualData()['authUser']->id;
+
+            if ( $userInfo->save() ) {
+                return back()->with('msg', 'User has been updated!');
             }
 
-            //Make dir, not exist
-            if (!Storage::disk('public')->exists('assets/user')) {
-                Storage::disk('public')->makeDirectory('assets/user');
-            }
-
-            //Resize image for Category and upload
-            $resizeImage = Image::make($image)->resize(100,100)->save(90);
-            Storage::disk('public')->put('assets/user/'.$imageName, $resizeImage);
         }else{
-            $imageName = $userInfo->image;
-        }
-       
-        $userInfo->name = $request->name;
-        $userInfo->email = $request->email;
-        $userInfo->status = $request->status;
-
-        $userInfo->role = $request->role;
-
-        $userInfo->image = $imageName;
-
-        $userInfo->sup_admin = ($tryingupdate->role ==1 && $tryingupdate->sup_admin==1)? '1':'0';
-        // $userInfo->sup_admin = ($id== session('loggedUser'))? 1:0;
-        $userInfo->approved_by = $authUser->id;
-        // return $userInfo; exit();
-        if ( $userInfo->save() ) {
-            return back()->with('msg', 'User has been updated!');
-        }
-
-        }//check Auth id
-        else{
             return back()->with('msg', "You shold be Admin");
         }
     }
+
+    /**
+     *Display Pandding User Update OR User Status update for dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     * this->permission from Controller.php
+     * @param int $role, int $status
+     */
+    public function statusupdate(Request $request, $id)
+    {
+        //check Authentication
+        if ( $this->permission() ) {
+            $user_status_up = Admin::findOrFail($id);
+
+            //input validation for role change
+            if (isset($request->role)) {
+                $this->validate($request, [
+                'role'        => 'required|numeric'
+                ]);
+                $user_status_up->role = $request->role;
+            }
+
+            //validation for status cahnge
+            if (isset($request->status)) {
+                $this->validate($request, [
+                'status'        => 'required|numeric',
+                ]);
+                $user_status_up->approved_by = $this->asUsualData()['authUser']->id;
+                 $user_status_up->status = $request->status;
+            }
+            
+           if ( $user_status_up->save() ) {
+                 return back()->with('status', "User Status Has been Updated!!~~$id");
+             }else{
+              return back()->with('status', "User Status Hasn't been Updated!!");  
+             }
+
+        }else{
+            return back()->with('msg', "You must be admin!"); 
+        }
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -263,16 +303,14 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $authUser = Admin::where('id', '=', session('loggedUser'))->first();
-        $user = Admin::findOrFail($id);
+         $user = Admin::findOrFail($id);
         
         $countsupAdmin =  count(Admin::where('sup_admin', '=', 1 )->get());
 
-        //$user->sup_admin ===0 && $user->role >1 && $authUser->role<3 && $authUser->status ===1 && $authUser->id != $user->id
-        if ( $authUser->role >2 ||  ($user->sup_admin ==1 && $countsupAdmin ==1 )) {
+        if ( $this->asUsualData()['authUser']->role >2 ||  ($user->sup_admin ==1 && $countsupAdmin ==1 )) {
             return back()->with('msg', 'Something went wrong or it\'s your own id!');
             
-        }elseif($id == $authUser->id){
+        }elseif($id == $this->asUsualData()['authUser']->id){
                 return back()->with('msg', 'You can\'t delete your own account!');
             }else{
            //Delete Image

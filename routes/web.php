@@ -61,6 +61,10 @@ Route::group(['middleware' => ['auth.midware']], function() {
     Route::resource('/dashboard/contact', ContactUsController::class);
 
     Route::get('/auth/logout', [AdminController::class, 'logout'])->name('auth.logout');
+
+    //News status update
+    Route::put('/user/statusupdate/{id}', [AdminController::class, 'statusupdate'])->name('user.update.status');
+    
     // Class day resource
     Route::resource('/dashboard/schedule/day', ClassDayController::class);
     //Class Time resourece
@@ -76,7 +80,7 @@ Route::group(['middleware' => ['auth.midware']], function() {
     //News update
     Route::put('/news/update/{slug}', [NewsController::class, 'update'])->name('news.update');
 
-    //News update
+    //News status update
     Route::put('/news/statusupdate/{id}', [NewsController::class, 'statusupdate'])->name('news.update.status');
     
     //News delete for admin/Dashboard

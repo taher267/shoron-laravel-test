@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
     /***********************
      *  Our Gallery Box  *
      ***********************/
-    //var gallery = $('.gallery-list a').simpleLightbox();
+    var gallery = $('.gallery_list a.light_img').simpleLightbox();
 
 
     /***********************

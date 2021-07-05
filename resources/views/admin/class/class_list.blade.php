@@ -12,7 +12,7 @@
                 @endisset
 
                 
-                {{$auth}}
+                {{-- {{$asUsualData['alluser']->where('id', '=', session('loggedUser'))}} --}}
             </div>
             <div class="col-lg-6">
                 <div class="d-flex flex-row-reverse"><a class="btn btn-primary mb-3 text-right text-capitalize" href="{{route('class.create')}}" title="">New class <i class="fa fa-plus"></i></a>
