@@ -39,7 +39,7 @@ class ClassTimeController extends Controller
     {
         $this->data['pageHead'] = 'Class Time Add ';
         $this->data['authUser'] = Admin::where('id', '=', session('loggedUser'))->first();
-        $this->data['classes'] = CourseClass::arrClassForSchedule();
+        $this->data['classes'] = CourseClass::arrOfClassName();
         $this->data['trainers'] = Trainer::arrTrainersForSchedule();
         $this->data['days'] = ClassDay::arrDayForSchedule();
         return view('admin.time.time_create', $this->data);

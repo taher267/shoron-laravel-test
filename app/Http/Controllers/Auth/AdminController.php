@@ -15,6 +15,7 @@ use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
+
     /**
      * Display a login form.
      *
@@ -253,7 +254,7 @@ class AdminController extends Controller
     }
 
     /**
-     *Display Pandding User Update OR User Status update for dashboard.
+     *Display Pandding User Update OR User Status Or ""User Role"" update for dashboard.
      *
      * @return \Illuminate\Http\Response
      * this->permission from Controller.php
@@ -266,12 +267,17 @@ class AdminController extends Controller
             $user_status_up = Admin::findOrFail($id);
 
             //input validation for role change
-            if (isset($request->role)) {
+            if (isset($request->role) ) {
                 $this->validate($request, [
-                'role'        => 'required|numeric'
+                'role'        => "required|numeric|min:".$this->dashboardData()['authUser']->role,
                 ]);
                 $user_status_up->role = $request->role;
             }
+
+            // else{
+            //     return back()->with('msg', "Sup Admin Couldn't be changed!");
+            // }
+            $this->no_of_sup_admin();
 
             //validation for status cahnge
             if (isset($request->status)) {
@@ -281,9 +287,18 @@ class AdminController extends Controller
                 $user_status_up->approved_by = $this->asUsualData()['authUser']->id;
                  $user_status_up->status = $request->status;
             }
-            
+
+
+            if ( $user_status_up->sup_admin ) {
+                return $user_status_up->sup_admin;
+            }
+
            if ( $user_status_up->save() ) {
-                 return back()->with('status', "User Status Has been Updated!!~~$id");
+                 if(isset($request->status)){
+                    return back()->with('status', "User Status Has been Updated!!~~$id");
+                 }elseif ($request->role) {
+                     return back()->with('role', "User Role Has been Updated!!~~$id");
+                 }
              }else{
               return back()->with('status', "User Status Hasn't been Updated!!");  
              }

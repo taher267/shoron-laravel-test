@@ -76,7 +76,7 @@
     </div>
 </div>
 <!-- Muscle End  -->
-
+{{-- milf --}}
 @yield('expart_trainer')
 <!--  Gallery Start-->
 <div class="gallery my_isotope">
@@ -86,18 +86,19 @@
         </div>
         <ul class="tabs">
             <li class="active"><span data-filter="*">All</span></li>
-            @foreach($uniqueDatas as $data)
-            <li><span class="text-capitalize" data-filter=".{{$data}}">{{$data}}</span></li>
-            @endforeach
-            
+            @foreach($galleries->unique('course_id') as $gallery)
+            <li><span class="text-capitalize" data-filter=".{{ strtolower(implode('-', (explode(" ", $gallery->galcourse->title))))}}">{{$gallery->galcourse->title}}</span></li>
+            @endforeach            
         </ul>
         <div class="gallery_list">
             <div class="row grid_list">
+                {{-- {{$galleries}} --}}
                 @foreach($galleries as $gallery)
-                <div class="col-lg-3 col-md-4 col-sm-12 mb-4 element-item {{$gallery->course}}">
+                {{-- {{$gallery}} --}}
+                <div class="col-lg-3 col-md-4 col-sm-12 mb-4 element-item {{ strtolower(implode('-', (explode(" ", $gallery->galcourse->title))))}}">
                     <div class="gallery_box">
-                        <img class="featured" src="{{asset($gallery->course_image)}}" alt="">
-                        <a class="light_img" href="{{asset($gallery->course_image)}}" class="gallery_overlay">
+                        <img class="featured" src="{{asset('storage/assets/gallery/'.$gallery->image)}}" alt="">
+                        <a onclick="" class="light_img gallery_overlay" href="{{asset('storage/assets/gallery/'.$gallery->image)}}">
                             <i class="fa fa-search-plus"></i>
                         </a>
                     </div>
@@ -106,7 +107,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 <!--  Gallary End -->
 
 <!-- Latest News  Start-->

@@ -31,7 +31,6 @@ class HomeController extends Controller
         $this->data['latestNews'] = News::orderBy('id', 'desc')->where('status', '=', 1)->take(3)->get();
         $this->data['uniqueDatas'] = Home::uniqueArrForGallary();
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
-        // $this->data['test'] = Schedule::arrForClassDay();
         return view('index',$this->data);
     }
 

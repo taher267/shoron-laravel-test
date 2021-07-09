@@ -7,18 +7,26 @@
     </div>
     @endif
     <div class="row">
-        <div class="col-lg-12">
-              @isset($pageHead)
-        <div class="col-12"><h2 class="text-info mb-3">{{$pageHead}}</h2></div>
-        @endisset
-        @if ($errors->any())
-            @foreach ($errors->all() as $err)
-                <div class="alert alert-danger">{{$err}}</div>
-            @endforeach
-        @endif 
-        </div>
+        {{-- <div class="col-lg-12">
+            @isset($pageHead)
+                <div class="col-12"><h2 class="text-info mb-3">{{$pageHead}}</h2></div>
+                @endisset
+                @if ($errors->any())
+                    @foreach ($errors->all() as $err)
+                        <div class="alert alert-danger">{{$err}}</div>
+                    @endforeach
+            @endif 
+        </div> --}}
            
-        <div class="col-lg-8 justify-content-between">
+        <div class="col-lg-8 justify-content-between m-auto">
+            @isset($pageHead)
+                <div class="col-12"><h2 class="text-info mb-3">{{$pageHead}}</h2></div>
+                @endisset
+                @if ($errors->any())
+                    @foreach ($errors->all() as $err)
+                        <div class="alert alert-danger">{{$err}}</div>
+                    @endforeach
+            @endif
             {!! Form::open(['route' => 'trainer.store', 'method'=>'post', 'enctype'=>"multipart/form-data"]) !!}
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-user text-primary"></i></span>

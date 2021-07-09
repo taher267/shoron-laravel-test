@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassTime;
 use App\Models\OurAddress;
 use App\Models\Trainer;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -22,10 +23,11 @@ class TrainerController extends Controller
      */
     public function index()
     {
-        $this->data['pageHead'] = 'Trainer List';
+        $this->data['pageHead'] = 'All Trainers';
 
         if ( $this->permission(4) ) {
             $this->data['trainers'] = Trainer::all()->sortByDesc('id');
+            $this->data['classtime'] = ClassTime::classTimesArr();
         $this->data['asUsualData'] = $this->asUsualData();
          return view('admin.trainer.trainer_list', $this->data);
         }else{
@@ -43,7 +45,7 @@ class TrainerController extends Controller
      */
     public function create()
     {
-        $pageHead = 'New Trainer';
+        $pageHead = 'Add New Trainer';
         //check Authentication
         if ($this->permission() ) {
     		$authUser = Admin::where('id', '=', session('loggedUser'))->first();

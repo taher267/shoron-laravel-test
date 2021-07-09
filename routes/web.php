@@ -7,6 +7,7 @@ use App\Http\Controllers\ClassDayController;
 use App\Http\Controllers\ClassTimeController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CourseClassController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
@@ -21,11 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [AdminController::class, 'check'])->name('auth.check');
 
 Route::post('auth/register', [AdminController::class, 'save'])->name('auth.save');
-
-
-
-
-
 
 Route::get('/about', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about');
 
@@ -59,6 +55,9 @@ Route::group(['middleware' => ['auth.midware']], function() {
 
     //contact or contact us Resource
     Route::resource('/dashboard/contact', ContactUsController::class);
+
+    //contact or contact us Resource
+    Route::resource('/dashboard/gallery', GalleryController::class);
 
     Route::get('/auth/logout', [AdminController::class, 'logout'])->name('auth.logout');
 
@@ -112,3 +111,4 @@ Route::get('/news/{caregory}/{details}', [NewsController::class, 'categorynewsde
 //contact Form
 Route::get('/contact-form',[ContactUsController::class, 'contactform'])->name('contact.form');
 Route::post('/contactform',[ContactUsController::class, 'contactsend'])->name('contact.send');
+

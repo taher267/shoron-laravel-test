@@ -15,9 +15,11 @@ class CreateGalleriesTable extends Migration
     {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
-            $table->string('course', 100);
-            $table->string('course_image', 100);
+            $table->foreignId('course_id');
+            $table->string('image', 255)->default('gallery.png');
             $table->foreignId('cat_id')->nullable();
+            $table->foreignId('added_id');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
