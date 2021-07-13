@@ -39,7 +39,7 @@
                             <th>Slug</th>
                             <th>Feature</th>
                             <th>Status</th>
-                            <th>Cat_id</th>
+                            <th>Tags</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@
                         <th>Slug</th>
                         <th>Feature</th>
                         <th>Status</th>
-                        <th>Cat_id</th>
+                        <th>Tags</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -73,13 +73,33 @@
                                 $var = explode('~~', session('status'));
                                 @endphp
                                 @if ($news->id == end($var))
-                                <span class="alert {{($news->status == 1)? 'alert-success': 'alert-danger'}}">
-                                    {{$var[0]}}
-                                </span>
+                                    <span class="alert {{($news->status == 1)? 'alert-success': 'alert-danger'}}">
+                                        {{$var[0]}}
+                                    </span>
                                 @endif
                                 @endif
                             </td>
-                            <td>{{$news->cat_id}}</td>
+                            <td title="{{$news->id}}" class="news_tags">
+                                {{-- {{$news->tags}} --}}
+                                {{-- $tag form database tags --}}
+                                @if(isset($tags) && isset($news->tags))
+                                @foreach ($tags as $keys => $tagg)
+                                    @foreach($news->tags as $key => $tag)
+                                        @if($keys+1 == $tag->pivot->tag_id)
+                                            <button class="btn" type="button">{{$tagg->title}}</button>
+                                        @endif 
+                                    @endforeach
+                                @endforeach
+
+                                @foreach ($tags as $keys => $tagg)
+                                    @foreach($news->tags as $key => $tag)
+                                        @if($keys+1 != $tag->pivot->tag_id)
+                                            <button class="" type="submit" value="{{$keys+1}}">{{$tagg->title}} </button>
+                                            @endif  
+                                    @endforeach
+                                @endforeach
+                            @endif
+                            </td>
                             <td>
                                 <a class="btn px-3" href="{{route('news.edit', $news->slug)}}"><i class="fa fa-edit"></i> Edit</a>
                                 {{-- Delete News --}}

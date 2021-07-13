@@ -76,7 +76,9 @@
     </div>
 </div>
 <!-- Muscle End  -->
+
 {{-- milf --}}
+@include('home_portion.class_schedule')
 @yield('expart_trainer')
 <!--  Gallery Start-->
 <div class="gallery my_isotope">

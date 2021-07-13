@@ -109,9 +109,25 @@ jQuery(document).ready(function(){
     /***********************
      *  breadcrumbs *
      ***********************/
-$('#breadcrumbs').breadcrumbsGenerator();
+    $('#breadcrumbs').breadcrumbsGenerator();
 
-});// jquery end
+    });// jquery end
+
+
+    /***********************
+     *  class Schedule Tabs  *
+     ***********************/
+    $('.classSch-outer .tab_container').hide();
+    $('.classSch-outer .tab_container:first').show();
+    $('.classSch-outer ul.tabs li:first').addClass('active');
+    $(".classSch-outer ul.tabs li a").on('click',function(){
+        $('.classSch-outer ul.tabs li').removeClass('active');
+        $(this).parent().addClass('active');
+        var currentTab = $(this).attr('href');
+        $('.classSch-outer .tab_container').hide();
+        $(currentTab).show();
+        return false;
+    });
 
 
 

@@ -91,7 +91,7 @@
 <!-- Owl Carousle JS -->
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 <!-- Fontawesome JS -->
-{{-- <script src="{{asset('assets/js/all.min.js')}}"></script> --}}
+<script src="{{asset('assets/js/all.min.js')}}"></script>
 @if (Request::is('/') || Request::is('schedule'))
     <!-- isotope JS -->
     <script src="{{asset('assets/js/isotope.pkgd.min.js')}}"></script>

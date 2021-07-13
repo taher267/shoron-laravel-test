@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
             $table->longText('description')->nullable();
             $table->string('image')->default('default.png');
             $table->foreignId('cat_id')->default(0);
+            $table->foreignId('tag_id');
             $table->foreignId('posted_by');
             $table->foreignId('approved_by');
             $table->string('date');
@@ -38,10 +39,10 @@ class CreateNewsTable extends Migration
      */
     public function down()
     {   
-        Schema::table('news', function( $table) {
-            // $table->boolean('status')->after('date')->default(0);
-            $table->foreignId('approved_by')->after('posted_by');
-        });
+        // Schema::table('news', function( $table) {
+        //     // $table->boolean('status')->after('date')->default(0);
+        //     $table->foreignId('approved_by')->after('posted_by');
+        // });
         
         // Schema::dropIfExists('news');
     }

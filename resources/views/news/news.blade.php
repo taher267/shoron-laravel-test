@@ -19,7 +19,6 @@
     </div>
 </div>
 <!-- End  Breadcrumbs Banner -->
-{{$asUsualData['authUser']}}
 <!-- Start News sec -->
 <div class="news @isset($newses)all_newses @endisset">
     <div class="container">

@@ -113,7 +113,7 @@
                     <i class="fa fa-newspaper"></i>
                     <span>News
                         {{--Pandding user Count  --}}
-                        @if($asUsualData['newses']->where('status', '=', 0)->count() != 0)
+                        @if(isset($asUsualData['alluser']) && $asUsualData['newses']->where('status', '=', 0)->count() != 0)
                         <sup><span title='Panding User' class='alert_panding_number'>{{$asUsualData['newses']->where('status', '=', 0)->count()}}</span></sup> 
                         @endif
                     </span>
@@ -126,6 +126,23 @@
                 </div>
             </li>
             {{-- News End --}}
+
+            {{-- News Menu --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->is('tag*') ? 'menu_active' : ''}}"  data-toggle="collapse" data-target="#collapseTag"
+                    aria-expanded="true" aria-controls="collapseTag">
+                    <i class="fa fa-newspaper"></i>
+                    <span>Tag</span>
+                </a>
+                <div id="collapseTag" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ request()->is('tag/table') ? 'active' : ''}}" href="{{route('tag.index')}}">All Tags</a>
+                        <a class="collapse-item {{ request()->is('tag/create') ? 'active' : ''}}" href="{{route('tag.create')}}">New Tag</a>
+                    </div>
+                </div>
+            </li>
+            {{-- News End --}}
+
             {{-- Category Menu --}}
             <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->is('category*') ? 'menu_active' : ''}}" href="{{route('category.index')}}" data-toggle="collapse" data-target="#collapseCategory"
@@ -185,7 +202,7 @@
                     <i class="fa fa-cubes"></i>
                     <span>Users</span>
                      {{--Pandding user Count  --}}
-                     @if($asUsualData['alluser']->where('status', '=', 0)->count() != 0)
+                     @if( isset($asUsualData['alluser']) && $asUsualData['alluser']->where('status', '=', 0)->count() != 0)
                     <sup><span title="Panding User" class="alert_panding_number">{{$asUsualData['alluser']->where('status', '=', 0)->count()}}</span></sup>
                     @endif
                 </a>
@@ -420,7 +437,6 @@
 
                 </nav>
                 <!-- End of Topbar -->
-                
                 <!-- Begin Page Content -->
                     @yield('main_contant')
 
@@ -441,7 +457,6 @@
 
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 

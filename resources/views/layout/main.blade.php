@@ -6,7 +6,7 @@
                 <div class="col-sm-3">
                     <span class="logo">
                         <a href="{{route('home')}}" title="gym logo"><img class="main_logo" id="main_logo" src="{{asset('assets/images/logo.png')}}" alt="Fitness Gym"></a>
-                        <a href="{{route('home')}}" title="gym"><img id="stiky_logo" class="stiky_logo" src="{{asset('assets/images/logo-fix.png')}}" alt="Fitness Gym"></a>
+                        <a href="{{route('home')}}" title="gym"><img id="stiky_logo" class="d-none" src="{{asset('assets/images/logo-fix.png')}}" alt="Fitness Gym"></a>
                     </span>
                 </div>
                 <div class="col-sm-9 col-xs-12 nav_wrap">

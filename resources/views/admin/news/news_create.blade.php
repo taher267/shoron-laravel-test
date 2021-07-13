@@ -29,11 +29,6 @@
                 <span class="input-group-text"><i class="fas fa-audio-description text-primary"></i></span>
                 {!! Form::text('description', NULL, ['class' => 'form-control ', 'placeholder' => 'News Desctiption']) !!}
             </div>
-{{-- 
-            <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fas fa-audio-description text-primary"></i></span>
-                {!! Form::text('slug', NULL, ['class' => 'form-control ', 'placeholder' => 'News Slug']) !!}
-            </div> --}}
 
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fas fa-image text-primary"></i></span>
@@ -44,6 +39,20 @@
                 <span class="input-group-text"><i class="fas fa-object-group text-primary"></i></span>
                 {!! Form::select('cat_id', $categories, null, ['class' => 'form-control text-capitalize', 'placeholder' => 'Select Category']) !!}
             </div>
+
+            <div class="input-group mb-3">
+                @if (isset($tags))                    
+                    @foreach($tags as $key => $tag)
+                        <span class="input-group-text form-control">
+                            {{-- <i class="fas fa-object-group text-primary"></i> --}}
+                            <label for="{{$tag}}" class="pt-2 text-capitalize">
+                            {!! Form::checkbox('tag_id[]', $key, false, ['class' => ' text-capitalize', 'id' => $tag]) !!}
+                            {{$tag}}
+                            </label>
+                        </span>
+                    @endforeach
+                @endif
+            </div>
             
             <div class="input-group mb-3">
                 
@@ -51,7 +60,7 @@
             </div>
             {!! Form::close() !!}
             <script>
-                document.querySelectorAll('select option')[0].value = "111";
+                // document.querySelectorAll('select option')[0].value = "111";
 
             </script>
         </div>

@@ -15,6 +15,14 @@ use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
+    public function reirectPath()
+    {
+        $prevourURL = url()->previous();
+        $baseURL    = url()->to('/');
+        // if ($prevourURL != $baseURL. '/auth/login') {
+        //     session()->put('url.intended', $prevourURL);
+        // }
+    }
 
     /**
      * Display a login form.
@@ -66,6 +74,7 @@ class AdminController extends Controller
                 if ($userInfo->status) {
                     $request->session()->put('loggedUser', $userInfo->id );
                 return redirect()->intended('dashboard');
+
                 }else{
                     return back()->with('fail', 'Your Acount Under Authorize, please wait max 72hrs!');
                 }

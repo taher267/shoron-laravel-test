@@ -13,6 +13,7 @@
         <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
         <!-- font Awesome css -->
         <link href="{{asset('assets/css/all.min.css')}}" rel="stylesheet">
+        {{-- <link href="{{asset('assets/css/font-awesome-4.min.css')}}" rel="stylesheet"> --}}
         
         <!-- lightbox css -->
         <link href="{{asset('assets/css/lightbox.min.css')}}" rel="stylesheet">

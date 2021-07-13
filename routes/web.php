@@ -13,6 +13,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\TagController;
 use App\Models\ClassDay;
 use App\Models\OurAddress;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,10 @@ Route::group(['middleware' => ['auth.midware']], function() {
     Route::resource('/dashboard/schedule/day', ClassDayController::class);
     //Class Time resourece
     Route::resource('/dashboard/schedule/time', ClassTimeController::class);
+
+    //Class Time resourece
+    Route::resource('/dashboard/tag', TagController::class);
+
     //Admin dashboard news Table
     Route::get('/dashboard/news', [NewsController::class, 'newslist'])->name('news.list');
     //Admin dashboard/admin news create
@@ -81,6 +86,9 @@ Route::group(['middleware' => ['auth.midware']], function() {
 
     //News status update
     Route::put('/news/statusupdate/{id}', [NewsController::class, 'statusupdate'])->name('news.update.status');
+    
+    //News tags update
+    Route::put('/news/tagsupdate/{id}', [NewsController::class, 'updateTags'])->name('news.update.tags');
     
     //News delete for admin/Dashboard
     Route::delete('/news/destroy/{slug}', [NewsController::class, 'destroy'] )->name('news.destroy');

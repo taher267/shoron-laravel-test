@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #3c3c3c;
     font-weight: bold;
 }
+.head h3{
+    font-weight: bold;
+    font-size: 32px;
+}
 p{
     margin: 0; padding: 0;font-family: 'Poppins', sans-serif; color: #3c3c3c;
 }
@@ -94,6 +98,7 @@ header.stiky_header{
 
 header.stiky_header  img#stiky_logo{
     max-width: 130px;
+    display: none;
 }
 
 header.stiky_header#header .container {
@@ -328,6 +333,97 @@ Muscle div CSS
     padding: 12px 15px;
 }
 
+
+
+/* ================================================== */
+/* class schedule section */
+/* ================================================== */
+.classSch-outer .container {position: relative;}
+.classSch-outer {
+    padding: 63px 0 75px;
+    
+}
+.table-outer{
+    margin-top: 78px;
+}
+
+.table-outer table {
+    margin-bottom: 0;
+}
+.table-outer table.tab_container{
+    display:none;
+}
+.classSch-outer .tabs {
+    text-align: center;
+    width: calc(100% + 21px);
+    margin-bottom: 20px;
+    top: 55px;
+}
+.classSch-outer .tabs li a {
+   
+}
+.classSch-outer .tabs li a {
+    font-size: 16px;
+    /*width: calc(13.9% - 16px);*/
+    margin: 0 32px;
+    padding: 9px 35px;
+}
+.classSch-outer .tabs li a:first-child{
+    margin-left: 0;
+}
+.table td {
+    vertical-align: middle;
+    border-bottom: 1px solid #c8c8c8;
+    border-top: none;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width:25%;
+}
+.table tr:nth-child(even) {
+    background: #eeeeee;
+}
+.table td a.btn {
+    padding: 7px 20px;
+}
+
+/* ================================================== */
+/* A Tabs Section */
+/* ================================================== */
+.tabs {
+}
+.tabs li {
+    display: inline;
+}
+.tabs li a, .tabs li span {
+    display: inline-block;
+    padding: 8px 20px;
+    font-size: 16px;
+    color: #fff;
+    background: #979797;
+    margin-right: 15px;
+    cursor: pointer;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s;
+    -ms-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+.tabs li:hover a, .tabs li.active a, .tabs li:hover span, .tabs li.active span {
+    background: #fb9221;
+    position: relative
+}
+.tabs li:hover a:before, .tabs li.active a:before, .tabs li:hover span:before, .tabs li.active span:before {
+    color: #fb9221;
+    content: "\f0d7";
+    /*font: normal normal normal 14px/1 FontAwesome;*/
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    bottom: -15px;
+    font-size: 25px;
+    margin-left: -8px;
+    left: 50%;
+}
 /*
 ==================================
 Expart Trainers CSS
