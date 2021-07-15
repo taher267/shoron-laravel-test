@@ -44,7 +44,7 @@ class NewsController extends Controller
     public function create()
     {
         if ($this->permission(4)) {
-            $this->data['headeing']     ='News page';
+            $this->data['pageHead']     ='News page';
             $this->data['asUsualData']  = $this->asUsualData();
             $this->data['categories']   =Category::categoriesListArr();
             $this->data['tags']   =Tag::tagsArr();
@@ -72,7 +72,7 @@ class NewsController extends Controller
         $this->validate($request, [
             'title'         => 'required',
             'description'   => 'string|nullable',
-            'tag_id'        => 'required',
+            'tag_id'        => 'nullable',
             'cat_id'        => 'numeric|nullable',
             'image'         => 'image|mimes:jpeg,png,jpg',
         ]);
@@ -133,10 +133,25 @@ class NewsController extends Controller
      */
     public function updateTags(Request $request, $id)
     {
-        // return $id;
-        $newsSync = News::findOrFail($id);
-        $newsSync->tags()->attach($request->only('tag_id'));
-            return back()->with('msg', "Tag has been added!");
+        //check Authentication
+        if ($this->permission(4) ) {
+            $newsTagUp = News::findOrFail($id);
+            //delete Tags
+            if ($request->tag_id == '') {
+                $newsTagUp->tags()->detach();
+                return back()->with('msg', "All Tag has been added!");
+            }else{
+                //input validation
+                $this->validate($request, [
+                    'tag_id'        => 'required|array',
+                ]);
+                $tags = $request->tag_id;
+                sort($tags);
+                
+                $newsTagUp->tags()->sync($tags);
+                    return back()->with('msg', "Tag has been added!");
+                }
+            }
                 
     }
 
@@ -210,6 +225,7 @@ class NewsController extends Controller
         $this->data['newslist'] = News::all();
         $this->data['asUsualData'] = $this->asUsualData();
         $this->data['tags']         =Tag::all();
+        $this->data['tagsarr']         =Tag::tagsArr();
 
         return view('admin.news.news_list', $this->data);
     }
@@ -256,14 +272,15 @@ class NewsController extends Controller
     {
         $checkNews = News::where('slug', $slug)->get()->first();
         if ($this->permission() || $this->dashboardData()['authUser']->slug == $checkNews->slug ) {
-            $this->data['headeing']     ='Edit News';
+            $this->data['pageHead']     ='Edit News';
             $this->data['news_edit']    = News::where('slug', $slug)
                                                 ->get()->first();
             $this->data['categories']   =Category::categoriesListArr();
-            $this->data['tags']         =Tag::tagsArr();
+            // $this->data['tags']         =Tag::tagsArr();
+            $this->data['tags']         =Tag::all();
             return view('admin.news.news_edit', $this->data);
         }else{
-            return back()->with('msg', 'Have to be admin');
+            return route('news.list')->with('msg', 'Have to be admin');
         }
         
     }
@@ -277,27 +294,36 @@ class NewsController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        // return $slug;
          //check Authentication
-         $checkNews = News::where('slug', $slug)->get()->first();
+        $checkNews = News::where('slug', $slug)->get()->first();
+        // return $checkNews->id;
         if ($this->permission() || $this->dashboardData()['authUser']->slug == $checkNews->slug ) {
+            $news_up    = News::where('slug', $slug)->get()->first();
             //input validation
-        $this->validate($request, [
-            'title'         => 'required|',
-            'description'   => 'string|nullable',
-            'cat_id'        => 'numeric|nullable',
-            'image'         => 'image|mimes:jpeg,png,jpg|max:1024',
-        ]);
+            $this->validate($request, [
+                'title'         => 'required|',
+                'description'   => 'string|nullable',
+                'cat_id'        => 'numeric|nullable',
+                'tag_id'        => 'nullable|array',
+                'image'         => 'image|mimes:jpeg,png,jpg|max:1024',
+            ]);
 
         //get form image
         $image      = $request->file('image');
         $up_slug    = Str::slug($request->title);
-        $news_up    = News::where('slug', $slug)->get()->first();
-
+        
+        //new slug exist on another post
+        $newSlugCheck = News::where('slug', $up_slug)->get()->first();
+        
        //unique slug
-        if ( ! News::where('slug', $slug)->get()->first() || $news_up->id == $news_up->id) {
-            $unique_slug = $slug;
+        if ( ! $newSlugCheck || $news_up->id == $newSlugCheck->id) {
+            //going to take previous slug
+            $unique_slug = $checkNews->slug;
+
         }else{
-            $unique_slug = $slug . "-" . News::orderBy('id', 'desc')->first()->id;
+            //slug exist table creating new slug
+            $unique_slug = $checkNews->slug . "-" . News::orderBy('id', 'desc')->first()->id;
         }
 
          if (isset($image)) {
@@ -323,7 +349,6 @@ class NewsController extends Controller
         
          //Random Slug for unique 
 
-         $rand_slug = $up_slug . "-". $news_up->id;
          $update = [
             'title'         => $request->title,
             'description'   => $request->description,
@@ -332,12 +357,19 @@ class NewsController extends Controller
             'slug'          => $unique_slug,
             'image'         => $imageName,
          ];
-         // return $update; exit();
-
+         
          // update query using slug
-         if ( News::where('slug', $slug)->update($update) ) {
+         if ( $checkNews->update($update) ) {
+            //Update Tags
+            if ($request->tag_id =="") {// delete tag
+                $checkNews->tags()->detach($request->tag_id);
+            }else{// 
+                $tags = $request->tag_id;
+                sort($tags);
+                $checkNews->tags()->sync($tags);
+            }
              Session()->flash('msg', "News Has been Updated!!");
-             return redirect()->route('news.edit', $rand_slug);
+             return redirect()->route('news.edit', $unique_slug);
              }
         }else{
             return back()->with('msg', "You must be admin!"); 
@@ -356,11 +388,14 @@ class NewsController extends Controller
         $checkNews = News::where('slug', $slug)->get()->first();
         if ($this->permission() || $this->dashboardData()['authUser']->slug == $checkNews->slug ) {
         //check the post image exists
-        if (Storage::disk('public')->exists('assets/news/' . $news->image)) {
-            Storage::disk('public')->delete('assets/news/' . $news->image);
+        if (Storage::disk('public')->exists('assets/news/' . $checkNews->image)) {
+            Storage::disk('public')->delete('assets/news/' . $checkNews->image);
         }
         
         if (News::where('slug', $slug)->delete()) {
+            // delete tag
+                $checkNews->tags()->detach();
+            
             Session()->flash('msg', 'News Has been deleted!!');
             return redirect()->back();
         }

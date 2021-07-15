@@ -15,7 +15,7 @@ class Tag extends Model
         $arr = [];
         $tags = self::all();
         foreach ($tags as $tag) {
-            $arr[$tag->id] = $tag->title;
+            $arr[$tag->id+1] = $tag->title;
         }
         return $arr;
         

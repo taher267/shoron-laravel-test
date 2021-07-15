@@ -12,6 +12,9 @@
                 @isset($pageHead)
                 <div class="col-12"><h2 class="text-info ">{{$pageHead}}</h2></div>
                 @endisset
+                @error('tag_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="col-lg-6">
                 <div class="d-flex flex-row-reverse"><a class="btn btn-primary mb-3 text-right" href="{{route('news.create')}}" title="">Add news <i class="fa fa-plus"></i></a>
@@ -62,7 +65,7 @@
                             <td>{{$news->description}}</td>
                             <td>{{$news->slug}}</td>
                             <td><img class="w-50 h_100" src="{{asset('storage/assets/news/'. $news->image)}}" alt="News Feature"></td>
-                            <td>
+                            <td class="allNewsStatus" id="allNewsStatus_{{$news->id}}">
                                 {!! Form::model($news, ['route'=> ['news.update.status', $news->id], 'method'=> 'put']) !!}
                                 <button id="news_status_btn" onclick='return confirm("{{($news->status == 1)? 'Do you want to deactive the post?': 'Do you want to active the post?'}}?") '
                                  title="{{($news->status == 1)? 'Do you want to deactive the post?': 'Do you want to active the post?'}}" value="{{($news->status == 1)? '0': '1'}}" class="font-weight-bold {{($news->status == 1)? ' btn active_btn': 'btn pandding_btn'}}" type="submit" name="status">{{($news->status == 1)? 'Active': 'Pandding'}}</button>
@@ -78,27 +81,29 @@
                                     </span>
                                 @endif
                                 @endif
-                            </td>
-                            <td title="{{$news->id}}" class="news_tags">
-                                {{-- {{$news->tags}} --}}
-                                {{-- $tag form database tags --}}
-                                @if(isset($tags) && isset($news->tags))
-                                @foreach ($tags as $keys => $tagg)
-                                    @foreach($news->tags as $key => $tag)
-                                        @if($keys+1 == $tag->pivot->tag_id)
-                                            <button class="btn" type="button">{{$tagg->title}}</button>
-                                        @endif 
-                                    @endforeach
-                                @endforeach
+                            </td title="{{$news->id}}">
+                            <td class="allNewsTags" id="allNewsListNewsTags_{{$news->id}}">
+                              <form action="{{route('news.update.tags', $news->id)}}" method="post"> @csrf @method('PUT')
+                                  @if (isset($tags))
+                                      <span class="">
+                                          @foreach ($tags as $keys => $tag)
 
-                                @foreach ($tags as $keys => $tagg)
-                                    @foreach($news->tags as $key => $tag)
-                                        @if($keys+1 != $tag->pivot->tag_id)
-                                            <button class="" type="submit" value="{{$keys+1}}">{{$tagg->title}} </button>
-                                            @endif  
-                                    @endforeach
-                                @endforeach
-                            @endif
+                                          <label class="" for="{{$tag->title}}">
+                                              <input type="checkbox" value="{{$tag->id}}"
+                                              @foreach($news->tags as $newstag)
+                                                      @if ($tag->id == $newstag->pivot->tag_id)
+                                                      checked
+                                                      @endif
+                                                      @endforeach
+                                              name="tag_id[]"  id="{{$tag->title}}">
+                                                  {{$tag->title}}
+                                              </label>
+
+                                          @endforeach
+                                      </span>
+                                  @endif
+                                  <button type="submit" name="id" value="{{$news->id}}">Add or Remove Tags</button>
+                              </form>
                             </td>
                             <td>
                                 <a class="btn px-3" href="{{route('news.edit', $news->slug)}}"><i class="fa fa-edit"></i> Edit</a>
