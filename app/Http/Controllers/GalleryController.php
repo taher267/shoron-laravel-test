@@ -19,11 +19,10 @@ class GalleryController extends Controller
     {
         $this->data['pageHead'] = "All Gallery Photos";
         if ( $this->permission(4) ) {
-            // $this->data['authUser'] = $this->asUsualData()['authUser'];
             $this->data['asUsualData'] = $this->asUsualData();
             $this->data['dashboardData'] = $this->dashboardData();
             $this->data['classes'] = CourseClass::arrOfClassName();
-            $this->data['permission'] = $this->permission();
+            $this->data['permission'] = $this->permission(4);
             return view('admin.gallery.gallery', $this->data);
         }else{
             return view('admin.gallery.gallery', $this->data);
@@ -37,15 +36,15 @@ class GalleryController extends Controller
      */
     public function create()
     {
-         $this->data['pageHead'] = "All Gallery Photos";
+         $this->data['pageHead'] = "Add New Photo";
         if ( $this->permission(4) ) {
             $this->data['authUser'] = $this->asUsualData()['authUser'];
             $this->data['asUsualData'] = $this->asUsualData();
             $this->data['dashboardData'] = $this->dashboardData();
             $this->data['classes'] = CourseClass::arrOfClassName();
-            return view('admin.gallery.gallery', $this->data);
+            return view('admin.gallery.gallery_create', $this->data);
         }else{
-            return view('admin.gallery.gallery', $this->data);
+            return view('admin.gallery.gallery_create', $this->data);
         }
     }
 

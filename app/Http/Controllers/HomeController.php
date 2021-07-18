@@ -35,7 +35,16 @@ class HomeController extends Controller
         $this->data['ouraddress'] = OurAddress::findOrFail(1);
         $this->data['days'] = ClassDay::all();
         return view('index', $this->data);
+        
     }
+    // public function welcome()
+    // {
+    //      $dashboardAsUsualData = $this->authUser();
+    //      // $dashboardAsUsualData = $this->asUsualData();
+        
+    //     return view('welcome', compact('dashboardAsUsualData'));
+    //     // return view('welcome')->with('posts', $posts);
+    // }
 
     /**
      * Show the form for creating a new resource.

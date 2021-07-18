@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ClassTime;
+use App\Models\Trainer;
 use App\Models\Gallery;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,16 @@ class CourseClass extends Model
      public function classTimes()
     {
         return $this->hasMany(ClassTime::class);
+    }
+    //Class time
+    public function classtime()
+    {
+        return $this->hasOne(ClassTime::class, 'id', 'class_time');
+    }
+    //Class of Trainer
+    public function classtrainer()
+    {
+        return $this->hasOne(Trainer::class, 'id', 'trainer');
     }
 
     public function classdetailstime()

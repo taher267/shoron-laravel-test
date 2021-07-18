@@ -60,8 +60,8 @@
             <!-- Nav Item - Pages Collapse Menu -->
 
             {{-- Gallery Menu --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->is('gallery*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseGallery"
+            <li class="nav-item ">
+                <a class="nav-link collapsed {{ request()->is('dashboard/gallery*') ? 'dash_menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseGallery"
                     aria-expanded="true" aria-controls="collapseGallery">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Gallery</span>
@@ -73,11 +73,12 @@
                     </div>
                 </div>
             </li>
+            
             {{-- Gallery menu end --}}
 
             {{-- Schedule Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->is('schedule*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseSchedule"
+                <a class="nav-link collapsed {{ request()->is('dashboard/schedule*') ? 'dash_menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseSchedule"
                     aria-expanded="true" aria-controls="collapseSchedule">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Schedule</span>
@@ -92,7 +93,7 @@
             {{-- Schedule menu end --}}
             {{-- Course Class Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->is('class*') ? 'menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseClass"
+                <a class="nav-link collapsed {{ request()->is('dashboard/class*') ? 'dash_menu_active' : ''}}" href="#" data-toggle="collapse" data-target="#collapseClass"
                     aria-expanded="true" aria-controls="collapseClass">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Classes</span>
@@ -108,7 +109,7 @@
 
             {{-- News Menu --}}
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->is('news*') ? 'menu_active' : ''}}" href="{{route('news.list')}}" data-toggle="collapse" data-target="#collapseNews"
+                <a class="nav-link collapsed {{ request()->is('dashboard/news*') ? 'dash_menu_active' : ''}}" href="{{route('news.list')}}" data-toggle="collapse" data-target="#collapseNews"
                     aria-expanded="true" aria-controls="collapseNews">
                     <i class="fa fa-newspaper"></i>
                     <span>News
@@ -408,8 +409,8 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small text-uppercase">@if(isset($asUsualData['authUser']->name)) {{$asUsualData['authUser']->name}} @endif</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{asset(isset(($asUsualData['authUser']->image))?'storage/assets/user/'. $asUsualData['authUser']->image:'storage/assets/user/avater.svg')}}">
-                            </a>
-                            {{-- {{($asUsualData['authUser']->image)?asset('storage/assets/user/'. $asUsualData['authUser']->image) :asset('admin/img/undraw_profile.svg')}} --}}
+                                </a>
+
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -501,6 +502,14 @@
     <script src="{{asset('admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <!-- Page level custom scripts -->
     <script src="{{asset('admin/js/demo/datatables-demo.js')}}"></script>
+    <script>
+                
+                // function toggleClass(){
+              // get the properties of an element
+              const element = document.querySelector(".dash_menu_active")
+              element.parentElement.classList.add('bg-white')
+              element.childElement.classList.add('text-primary')
+            </script>
 
 </body>
 

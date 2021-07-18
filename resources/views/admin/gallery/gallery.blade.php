@@ -14,12 +14,11 @@
                 @endisset
             </div>
             <div class="col-lg-6">
-                <div class="d-flex flex-row-reverse"><button type="button" data-toggle="modal" data-target="#newGalleryAddModal" class="btn btn-primary mb-3 text-right" href="{{route('gallery.create')}}" title="">New Photo <i class="fa fa-image"></i></button>
+                <div class="d-flex flex-row-reverse"><button type="button" data-toggle="modal" data-target="#newGalleryAddModal" class="btn btn-primary mb-3 text-right" href="{{route('gallery.create')}}" title="">Add New Photo <i class="fa fa-image"></i></button>
                 </div>
             </div>
             
         </div>
-        
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -57,7 +56,7 @@
                                 <td class="text-normal">{{$photo->cat_id}}</td>
                                 
                                 <td>
-                                    <button {{($permission || $dashboardData["authUser"]->id == $photo->added_by)? '' : 'disabled' }} type="button" class="btn btn-primary" data-toggle="modal" data-target="#galleryEditModal"><i class="fa fa-edit"></i> Edit</button>
+                                    <button {{($permission== true || $dashboardData["authUser"]->id == $photo->added_by)? '' : 'disabled' }} type="button" class="btn btn-primary" data-toggle="modal" data-target="#galleryEditModal"><i class="fa fa-edit"></i> Edit</button>
                                     {!! Form::open(['route' => ['gallery.destroy', $photo->id], 'method' => 'DELETE']) !!}
                                         <button onclick='return {{(($permission  && $dashboardData["authUser"]->role == 1) || $dashboardData["authUser"]->id == $photo->id)?'confirm("Are you Sure to Delete the'. $photo->galcourse->title.'")' : 'false' }}'  type="submit" class="btn"><i class="fa fa-trash"></i> Delete</button>
                                     {!! Form::close() !!}

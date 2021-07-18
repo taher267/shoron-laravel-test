@@ -47,7 +47,7 @@ class AdminController extends Controller
     public function dashboard(){
         $pageHead = 'Dashboard';
         $asUsualData = $this->asUsualData();
-        $authUser = $this->asUsualData()['authUser'];
+        $authUser = $this->authUser();
         $ouraddress = OurAddress::findOrFail(1);
         return view( 'admin.day.day',compact('pageHead', 'ouraddress', 'authUser', 'asUsualData') );
     }

@@ -18,7 +18,6 @@ use Intervention\Image\Facades\Image;
 class CourseClassController extends Controller
 {
     
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +26,6 @@ class CourseClassController extends Controller
     public function index()
     {
         $pageHead = 'All Classes';
-        // $auth = Admin::where('id', '=', session('loggedUser'))->first();
         $asUsualData = $this->asUsualData();
         $classes= CourseClass::all()->sortByDesc('id');
         return view('admin.class.class_list', compact('classes', 'pageHead', 'asUsualData'));
@@ -40,7 +38,7 @@ class CourseClassController extends Controller
      */
     public function create()
     {
-        $pageHead = 'New Class';
+        $pageHead = 'Add New Class';
         $classtime  = ClassTime::classTimesArr();
         $trainer    = Trainer::arrTrainersForSchedule();
         return view('admin.class.class_create', compact('pageHead', 'classtime', 'trainer'));
@@ -90,7 +88,7 @@ class CourseClassController extends Controller
          date_default_timezone_set('Asia/Dhaka');
         
             $new_class = new CourseClass;
-            $new_class->title    = $request->title;
+            $new_class->title    = strtolower($request->title);
             $new_class->description       = $request->description;
             $new_class->trainer          = $request->trainer;
             $new_class->class_time       = $request->class_time;
@@ -143,7 +141,7 @@ class CourseClassController extends Controller
     }
     public function edit($id)
     {
-       $pageHead    = 'New Class';
+       $pageHead    = 'Edit Class';
         $class      = CourseClass::findOrFail($id);
         $classtime  = ClassTime::classTimesArr();
         $trainer    = Trainer::arrTrainersForSchedule();
@@ -204,7 +202,7 @@ class CourseClassController extends Controller
          date_default_timezone_set('Asia/Dhaka');
         
          
-            $class_up->title    = $request->title;
+            $class_up->title    = strtolower($request->title);
             $class_up->description       = $request->description;
             $class_up->trainer          = $request->trainer;
             $class_up->class_time       = $request->class_time;

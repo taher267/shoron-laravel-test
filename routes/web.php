@@ -120,3 +120,11 @@ Route::get('/news/{caregory}/{details}', [NewsController::class, 'categorynewsde
 Route::get('/contact-form',[ContactUsController::class, 'contactform'])->name('contact.form');
 Route::post('/contactform',[ContactUsController::class, 'contactsend'])->name('contact.send');
 
+//testing component
+// Route::get('/welcome',[HomeController::class, 'welcome'])->name('welcome');
+
+Route::get('welcome', function() {
+    return view('welcome');
+});
+
+

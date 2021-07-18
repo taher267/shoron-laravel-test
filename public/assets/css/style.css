@@ -42,9 +42,23 @@ span{display: inline-block;}
     background: #fb9221;
     color: #fff;
 }
-.menu_active{
-    color: #fff !important;
+.dash_menu_active{
+    color: #4D72DE !important; font-size: 30px;
 }
+.active_dashboard_nav_item{
+    background: #4D72DE !important; font-size: 30px;
+}
+/*.dash_menu_active a i.fas {
+    color: black !important;
+}*/
+
+
+.dash_menu_active[data-toggle=collapse]::after{
+    color: #4D72DE !important; font-size: 25px !important;
+    margin-top: 7px;
+}
+
+
 .h-300{
     height: 300px;
 }
@@ -359,15 +373,19 @@ Muscle div CSS
     margin-bottom: 20px;
     top: 55px;
 }
-.classSch-outer .tabs li a {
-   
+.classSch-outer .tabs li{
+   margin-right: 14px;
+}
+.classSch-outer .tabs li:last-child{
+   margin-right: 0;
 }
 .classSch-outer .tabs li a {
     font-size: 16px;
     /*width: calc(13.9% - 16px);*/
-    margin: 0 32px;
+    margin:0;
     padding: 9px 35px;
 }
+
 .classSch-outer .tabs li a:first-child{
     margin-left: 0;
 }

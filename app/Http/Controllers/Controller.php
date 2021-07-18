@@ -17,25 +17,31 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     protected $data = [];
-
+//     public $auther;
+    
+// public function __construct($auther)
+// {
+    
+// }
 //Authentication
-   protected static function authUser()
+   public static function authUser()
     {
-        return Admin::where('id', '=', session('loggedUser'))->first();
+        return Admin::where('id', '=', session('loggedUser'))->first()->name;
     }
 
 //As usual data
    public static function asUsualData()
     {
+        $currUser = Admin::where('id', '=', session('loggedUser'))->first();
         $alldata =[
-            'authUser' => Admin::where('id', '=', session('loggedUser'))->first(),
+            'authUser' => $currUser,
             'contactTable' => ContactUs::all(),
             'ouraddress' => OurAddress::all(),
             'newses' => News::all(),
             'alluser' => Admin::all(),
         ];
         return $alldata;
-        //blade print $[authUser]
+        
     }
 
 
@@ -64,7 +70,7 @@ class Controller extends BaseController
 
     public function permission(int $role = 2, int $status = 1)
     {
-        if ($this->asUsualData()['authUser']->role <=$role && $this->asUsualData()['authUser']->status ===$status) {
+        if ( $this->asUsualData()['authUser']->role <=$role && $this->asUsualData()['authUser']->status ===$status ) {
             return true;
         }else{
             return false;

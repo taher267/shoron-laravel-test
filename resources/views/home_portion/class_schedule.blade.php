@@ -17,7 +17,7 @@
                     @foreach ($schedule->where('day_id', '=', $day->id) as $class)
                         @if ($class->day_id == $day->id )
                             <tr>
-                                    <td>{{$class->course->title}}</td>
+                                    <td class="text-capitalize">{{$class->course->title}}</td>
                                     <td>{{$class->time}}</td>
                                     <td class="text-capitalize">{{$class->day->day}}</td>
                                     <td>{{$class->trainer->name}}</td>

@@ -34,6 +34,9 @@
 </div>
 </div>
 <!-- End building sec -->
+
+
+
 <!-- Start Featured Class -->
 <div class="feature_class">
     <div class="container">
